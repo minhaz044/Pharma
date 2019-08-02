@@ -5,8 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import me.pharmacy.dao.CustomerRepository;
-import me.pharmacy.dao.SalesRepository;
+
 import me.pharmacy.services.CustomerService;
 import me.pharmacy.services.SalesService;
 

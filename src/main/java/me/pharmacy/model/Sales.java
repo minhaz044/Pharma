@@ -32,6 +32,6 @@ public class Sales {
 	private Medicine product;
 	private float comision;
 	private int quantity;
-	private boolean delete=false;
+	private boolean is_delete=false;
 
 }

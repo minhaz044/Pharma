@@ -29,6 +29,6 @@ public class MedicineType {
 	private String name;
 	@OneToMany(mappedBy = "type")
 	private List<Medicine> medicines;
-	private boolean delete=false;
+	private boolean is_delete=false;
 
 }

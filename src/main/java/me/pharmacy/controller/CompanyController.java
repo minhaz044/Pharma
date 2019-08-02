@@ -23,6 +23,7 @@ public class CompanyController {
 	
 	@RequestMapping(value = "/",method = RequestMethod.GET)
 	protected List<MedicineCompany> getMedicineCompany() {
+		System.out.println("**************Function Is called***********");
 		return medicineCompanyService.getAllMedicineCompany();
 	}
 	

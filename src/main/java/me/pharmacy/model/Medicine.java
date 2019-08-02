@@ -29,7 +29,7 @@ public class Medicine {
 	private int medicine_id;
 	private String name;
 	@ManyToOne
-	@JoinColumn(name = "company_id")
+	@JoinColumn(name = "company_id") 
 	private MedicineCompany company;
 	@ManyToOne
 	@JoinColumn(name = "generic_id")
@@ -39,9 +39,9 @@ public class Medicine {
 	private MedicineType type;
 	@OneToMany(mappedBy = "product")
 	private List<Sales> sales;
-	private String descriString;
+	private String description;
 	private float dosage;
 	private float priceIP;
-	private boolean delete=false;
+	private boolean is_delete=false;
 
 }

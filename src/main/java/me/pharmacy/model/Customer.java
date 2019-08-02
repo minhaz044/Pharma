@@ -40,7 +40,7 @@ public class Customer {
 	@ManyToOne
 	@JoinColumn(name = "id")
 	private Person salesBy;
-	private boolean delete=false;
+	private boolean is_delete=false;
 			
 	@PrePersist
 	protected void onCreate() {

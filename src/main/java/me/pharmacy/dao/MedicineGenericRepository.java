@@ -9,6 +9,6 @@ import me.pharmacy.model.MedicineGeneric;
 
 public interface MedicineGenericRepository  extends CrudRepository<MedicineGeneric,Integer>{
 
-    @Query("SELECT a FROM MedicineGeneric a WHERE a.delete=false")
+    @Query("SELECT a FROM MedicineGeneric a WHERE a.is_delete=false")
     public List<MedicineGeneric> findAll();
 }

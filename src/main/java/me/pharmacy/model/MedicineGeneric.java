@@ -29,6 +29,6 @@ public class MedicineGeneric {
 	@OneToMany(mappedBy = "generic")
 	private List<Medicine> medicines;
 	private String chemical;
-	private boolean delete=false;
+	private boolean is_delete=false;
 
 }

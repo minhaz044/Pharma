@@ -31,6 +31,6 @@ public class MedicineCompany {
 	private String address;
 	private String representative;
 	private String contactInfo;
-	private boolean delete=false;
+	private boolean is_delete=false;
 
 }
