@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+</head>
+<body>
+<div ng-app="myApp" ng-controller="myCtrl" class="container">
+	<div class="container-fluid">
+	<h1>WellCome To Ashrab Pharmacy</h1>
+	<p>ashrab Pharmacy Moto</p>
+	  <div class="form-row">
+   		 <div class="form-group col-md-3">
+      	<select id="inputState" class="form-control">
+        <option selected>Medicine</option>
+        <option>Company</option>
+        <option>Generics</option>
+     	 </select>
+   		 </div>
+    	<div class="form-group col-md-6">
+      	<input type="text" class="form-control" id="inputZip">
+    	</div>
+  	</div>
+  	</br></br>
+	<div>
+		<table class="table">
+		  <thead>
+		    <tr><th scope="col">#</th><th scope="col">Medicine</th> <th scope="col">Quantity</th> <th scope="col">TotalPrice</th><th scope="col">Delete</th></tr>
+		  </thead>
+		  <tbody>
+		    <tr><th scope="row">1</th><td>Mark</td> <td>Otto</td><td>@mdo</td><td><button class="btn btn-danger">X</button></td></tr>
+		    <tr><th scope="col"></th><th scope="col"></th> <th scope="col"></th> <th scope="col">Total Amount(tk):</th><th scope="col"></th></tr>
+		</tbody>
+		</table>
+	</div>
+	<div>
+	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-success" data-toggle="modal" data-target="#customerInfoModal">Save And Print</button>
+	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-success" data-toggle="modal" data-target="#customerInfoModal">Save</button>
+	</div>
+	</div>
+
+<!--  modal For Add Medicine -->
+<!-- Modal -->
+<div class="modal fade" id="customerInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Sales Information</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       	<form class="form-horizontal" action="#">
+  			<div class="form-group">
+		    <label class="control-label col-sm-2" for="medicineName">Customer Name:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="medicineName">
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label class="control-label col-sm-2" for="medicineName">Customer Contact Number:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="medicineName">
+		    </div>
+		  </div>
+		  	<div class="form-group">
+		    <label class="control-label col-sm-2" for="genericsName">Comision*:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="genericsName" placeholder="Enter Generics Name"  ng-model="medicinePrice">
+		    </div>
+		  </div>
+		 <div class="form-group">
+		    <label class="control-label col-sm-2" for="genericsName">Payment*:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="genericsName" placeholder="Enter Generics Name"  ng-model="medicinePrice">
+		    </div>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button  ng-click="onClickMedicineBtnSubmit()" class="btn btn-primary">Save Sales</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+</body>
+</html>

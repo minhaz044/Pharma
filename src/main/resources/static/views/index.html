@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Bootstrap Example</title>
+<title>Ashrab Pharmacy</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -19,6 +19,8 @@
 	<button type="button" id="companyBtn"name="medicineTypeBtn" class="btn btn-primary" data-toggle="modal" data-target="#medicineTypeModal">Add Medicine Type</button>
 	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#medicineModal">Add Medicine </button>
 	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#salesPersonModal">Add Sales Person </button>
+	<a href="/shop" class="btn btn-primary" type="button" id="companyBtn"name="medicineBtn" >Enter Into Shop</a>
+	
 </div>
 
 
@@ -188,7 +190,7 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="genericsChemical">Generics Company:</label>
+		    <label class="control-label col-sm-2" for="genericsChemical">Medicine Company:</label>
 		    <div class="col-sm-10"> 
 		    	 <select class="custom-select" ng-model="medicineCompany"ng-options="company as company.name for company in companies"
 		    	  ng-change="loadGenerics()">
@@ -196,7 +198,7 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="genericsChemical">Generics Generic:</label>
+		    <label class="control-label col-sm-2" for="genericsChemical">Medicine Generic:</label>
 		    <div class="col-sm-10"> 
 		    	 <select class="custom-select" ng-model="medicineGeneric"ng-options="generic as generic.generic for generic in generics"
 		    	  ng-change="loadType()">
@@ -204,7 +206,7 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="genericsChemical">Generics Type:</label>
+		    <label class="control-label col-sm-2" for="genericsChemical">Medicine Type:</label>
 		    <div class="col-sm-10"> 
 		    	 <select class="custom-select" ng-model="medicineType"ng-options="type as type.name for type in types"></select>
 		    </div>
@@ -258,18 +260,18 @@
 	var app = angular.module('myApp', []);
 	app.controller('myCtrl', function($scope, $http) {
 		/**************************Batch Fetch************************/
- 		function loadBatch(){
+ 		function loadCompany(){
 			  $http({
 				    method : "GET",
 				      url : "/company/"
 				  }).then(function mySuccess(response) {
 					  $scope.companies = response.data;
-					  //alert(response.data[0].name);
+					  alert(response.data[0].name);
 				  }, function myError(response) {
 				    $scope.myWelcome = response.statusText;
 				  });
 		};
-		loadBatch();
+		loadCompany();
 		/**************************Batch Course************************/
  	  $scope.loadGenerics=function(){
 		  $http({
@@ -311,6 +313,7 @@
 				$scope.companyRePresentative="";
 				$scope.contactInfo="";
 			  alert("Company Added SucessFully");
+			  loadCompany();
 			}, function (error) {
 			  alert("Operation Failed"+error.data);
 			});
@@ -378,8 +381,6 @@
 			"dosage":$scope.medicineDosage,
 			"priceIP":$scope.medicinePrice
 			};
-		console.log(medicine);
-
 		  $http({
 			  method: 'POST',
 			  url:"/product/add",
@@ -399,7 +400,7 @@
 			});
 	};
 	
-	/**********************************Generate Routine Btn*********************/salesPersonName
+	/**********************************Generate Routine Btn*********************/
 /* 	$scope.onClickBtnGenerateRoutine=function(){
 		window.location.pathname = "/routine";
 	
@@ -410,5 +411,9 @@
 	});
 	
 	</script>
+	
+	
+	
+	
 
 

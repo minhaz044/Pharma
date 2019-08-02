@@ -40,7 +40,7 @@ public class Medicine {
 	@OneToMany(mappedBy = "product")
 	private List<Sales> sales;
 	private String description;
-	private float dosage;
+	private String dosage;
 	private float priceIP;
 	private boolean is_delete=false;
 

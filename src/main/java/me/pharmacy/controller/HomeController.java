@@ -11,8 +11,13 @@ public class HomeController {
 	@GetMapping("/")
 	protected ModelAndView home() {
 		ModelAndView mv=new ModelAndView();
-		mv.setViewName("index.html");
+		mv.setViewName("views/index.html");
 		return mv;
 	}
-
+	@GetMapping("/shop")
+	protected ModelAndView shop() {
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("views/shop.html");
+		return mv;
+	}
 }
