@@ -15,7 +15,7 @@ import me.pharmacy.model.Customer;
      public List<Customer> findAll();
      
      @Query("SELECT a FROM Customer a WHERE a.createdAt BETWEEN :statDate AND :endDate AND a. a.is_delete=false ")
-     public List<Customer> findAllByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
+     public List<Customer> findAllSalesByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
      
      @Query("SELECT a FROM Customer a WHERE a.createdAt BETWEEN :statDate AND :endDate AND ((a.total_price-((a.comision*a.totalPrice)/100))-a.due)>0 AND a. a.is_delete=false ")
      public List<Customer> findAllDueByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
@@ -27,12 +27,12 @@ import me.pharmacy.model.Customer;
      @Query("SELECT a FROM Customer a WHERE a.createdAt BETWEEN :statDate AND :endDate AND a.due>0 AND a. a.is_delete=false ")
      public List<Customer> findAllCashPaidByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
      
-     
+     /*
      @Query("SELECT a FROM Customer a WHERE a.createdAt BETWEEN :statDate AND :endDate AND a.totalPrice>0 AND a. a.is_delete=false ")
      public List<Customer> findAllSalesByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
      
      
-     
+     */
      
      
      

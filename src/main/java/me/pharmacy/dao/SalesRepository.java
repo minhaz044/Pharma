@@ -11,4 +11,6 @@ public interface SalesRepository  extends CrudRepository<Sales,Integer> {
 
     @Query("SELECT a FROM Sales a WHERE a.is_delete=false")
     public List<Sales> findAll();
+    
+  
 }
