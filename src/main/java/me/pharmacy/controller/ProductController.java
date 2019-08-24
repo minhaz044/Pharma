@@ -19,6 +19,7 @@ public class ProductController {
 	
 	@RequestMapping(value = "/",method = RequestMethod.GET)
 	protected List<Medicine> getMedicine() {
+		 medicineService.getAllMedicine().forEach(s->System.out.println(s));
 		return medicineService.getAllMedicine();
 	}
 	

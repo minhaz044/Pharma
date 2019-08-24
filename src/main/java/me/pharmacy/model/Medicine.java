@@ -4,6 +4,7 @@ package me.pharmacy.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,14 +32,17 @@ public class Medicine {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int medicine_id;
 	private String name;
-	@ManyToOne
-	@JoinColumn(name = "company_id") 
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+	@JsonIgnore
 	private MedicineCompany company;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "generic_id")
+	@JsonIgnore
 	private MedicineGeneric generic;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "type_id")
+	@JsonIgnore
 	private MedicineType type;
 	@OneToMany(mappedBy = "product")
 	private List<Sales> sales;
@@ -45,3 +52,10 @@ public class Medicine {
 	private boolean is_delete=false;
 
 }
+
+
+
+
+
+
+

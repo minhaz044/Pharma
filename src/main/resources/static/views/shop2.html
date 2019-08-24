@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+<title>Ashrab Pharmacy Shop</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+           <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>  
+           <style>  
+           li{  
+                cursor:pointer;  
+           }  
+           li:hover  
+           {  
+                background-color:#f9f9f9;  
+           }  
+           </style>
+</head>
+<body>
+<div ng-app="myApp" ng-controller="myCtrl" class="container">
+	<div class="container-fluid">
+	<h1>WellCome To Ashrab Pharmacy</h1>
+	<p>ashrab Pharmacy Moto</p>
+	  <div class="form-row">
+   		 <div class="form-group col-md-3"><p><b>Search Category:</b></p> 
+      	<select id="inputState" class="form-control">
+        <option selected>Medicine</option>
+        <option>Company</option>
+        <option>Generics</option>
+     	 </select>
+   		 </div>
+    	<div class="form-group col-md-5"><p><b>Medicine Name:</b></p> 
+      	<input type="text" class="form-control" id="medicine" name="medicine" ng-model="medicine" ng-keyup="medicine(medicine)" placeholder="Select Your Medicine">
+    	<ul class="list-group" ng-model="hidethis" ng-hide="hidethis">  
+             <li class="list-group-item" ng-repeat="medicine in medicines" ng-click="fillTextbox(medicine)">{{medicine}}</li>  
+        </ul> 
+    	</div><!-- "medicine as medicine.name for medicine in medicines" -->
+    	<div class="form-group col-md-3"><p><b>Medicine Quantity:</b></p> 
+      	<input type="number" class="form-control" id="quantity"  min="1"  placeholder="Medicine Quantity">
+    	</div>    	
+  	</div>
+  	</br></br>
+	<div>
+		<table class="table">
+		  <thead>
+		    <tr><th scope="col">#</th><th scope="col">Medicine</th> <th scope="col">Quantity</th> <th scope="col">TotalPrice</th><th scope="col">Delete</th></tr>
+		  </thead>
+		  <tbody>
+		    <tr><th scope="row">1</th><td>Mark</td> <td>Otto</td><td>@mdo</td><td><button class="btn btn-danger">X</button></td></tr>
+		    <tr><th scope="col"></th><th scope="col"></th> <th scope="col"></th> <th scope="col">Total Amount(tk):</th><th scope="col"></th></tr>
+		</tbody>
+		</table>
+	</div>
+	<div>
+	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-success" data-toggle="modal" data-target="#customerInfoModal">Save And Print</button>
+	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-success" data-toggle="modal" data-target="#customerInfoModal">Save</button>
+	</div>
+	</div>
+<!-- __________________________________modal For Add Medicine______________________________ -->
+<!--   -->
+<!-- Modal -->
+<div class="modal fade" id="customerInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Sales Information</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       	<form class="form-horizontal" action="#">
+  			<div class="form-group">
+		    <label class="control-label col-sm-2" for="medicineName">Customer Name:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="medicineName">
+		    </div>
+		  </div>
+		   <div class="form-group">
+		    <label class="control-label col-sm-2" for="medicineName">Customer Contact Number:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="medicineName">
+		    </div>
+		  </div>
+		  	<div class="form-group">
+		    <label class="control-label col-sm-2" for="genericsName">Comision*:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="genericsName" placeholder="Enter Generics Name"  ng-model="medicinePrice">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="control-label col-sm-2" for="genericsName">Total Amount:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="genericsName" placeholder=""  ng-model="medicinePrice">
+		    </div>
+		  </div>
+		  	<div class="form-group">
+		    <label class="control-label col-sm-2" for="genericsName">Total Amount(With Commision):</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="genericsName" placeholder=""  ng-model="medicinePrice" readonly>
+		    </div>
+		  </div>		  
+		 <div class="form-group">
+		    <label class="control-label col-sm-2" for="genericsName">Payment*:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="genericsName" placeholder="Enter Generics Name"  ng-model="medicinePrice">
+		    </div>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button  ng-click="onClickMedicineBtnSubmit()" class="btn btn-primary">Save Sales</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+</div>
+</body>
+</html>
+
+
+<script>  
+ var app = angular.module("myapp",[]);  
+ app.controller("myCtrl", function($scope){  
+      $scope.medicines = [  
+           "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao, People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia, The Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia (Slovak Republic)", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"  
+      ];  
+      $scope.medicine = function(data){  
+           $scope.hidethis = false;  
+           var output = [];  
+           angular.forEach($scope.medicines, function(medicine){  
+                if(medicine.toLowerCase().indexOf(data.toLowerCase()) >= 0)  
+                {  
+                     output.push(medicine);  
+                }  
+           });  
+           $scope.medicines = output;  
+      }  
+      $scope.fillTextbox = function(string){  
+           $scope.country = string;  
+           $scope.hidethis = true;  
+      }  
+ });  
+ </script>
+

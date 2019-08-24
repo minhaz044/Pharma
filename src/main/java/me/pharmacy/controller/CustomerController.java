@@ -12,7 +12,7 @@ import me.pharmacy.services.SalesService;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-	@Autowired
+	/*@Autowired
 	private SalesService salesService;
 	@Autowired
 	private CustomerService customerService;

@@ -12,8 +12,10 @@ import me.pharmacy.model.Customer;
 
 @Service
 public class CustomerService {
+	/*
 	@Autowired
 	public CustomerRepository customerRepo;
+	
 	List<Customer> getAll(){
 		return customerRepo.findAll();
 	}
@@ -48,5 +50,5 @@ public class CustomerService {
 	public Customer getCustomer(int id) {
 		return customerRepo.findById(id).get();
 	}
-	
+*/	
 }

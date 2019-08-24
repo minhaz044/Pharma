@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +29,11 @@ public class Sales {
 	private int sales_id;
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
+	@JsonIgnore
 	private Customer customer;
 	@ManyToOne
 	@JoinColumn(name = "product_id")
+	@JsonIgnore
 	private Medicine product;
 	private float comision;
 	private int quantity;

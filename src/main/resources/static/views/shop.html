@@ -1,52 +1,121 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<head>
-<title>Bootstrap Example</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+           <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> 
+<style>
+li {
+	cursor: pointer;
+}
+
+li:hover {
+	background-color: #f9f9f9;
+}
+</style>
 </head>
 <body>
-<div ng-app="myApp" ng-controller="myCtrl" class="container">
-	<div class="container-fluid">
-	<h1>WellCome To Ashrab Pharmacy</h1>
-	<p>ashrab Pharmacy Moto</p>
-	  <div class="form-row">
-   		 <div class="form-group col-md-3">
-      	<select id="inputState" class="form-control">
-        <option selected>Medicine</option>
-        <option>Company</option>
-        <option>Generics</option>
-     	 </select>
-   		 </div>
-    	<div class="form-group col-md-6">
-      	<input type="text" class="form-control" id="inputZip">
-    	</div>
-  	</div>
-  	</br></br>
-	<div>
-		<table class="table">
-		  <thead>
-		    <tr><th scope="col">#</th><th scope="col">Medicine</th> <th scope="col">Quantity</th> <th scope="col">TotalPrice</th><th scope="col">Delete</th></tr>
-		  </thead>
-		  <tbody>
-		    <tr><th scope="row">1</th><td>Mark</td> <td>Otto</td><td>@mdo</td><td><button class="btn btn-danger">X</button></td></tr>
-		    <tr><th scope="col"></th><th scope="col"></th> <th scope="col"></th> <th scope="col">Total Amount(tk):</th><th scope="col"></th></tr>
-		</tbody>
-		</table>
-	</div>
-	<div>
-	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-success" data-toggle="modal" data-target="#customerInfoModal">Save And Print</button>
-	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-success" data-toggle="modal" data-target="#customerInfoModal">Save</button>
-	</div>
-	</div>
+	<div ng-app="myapp" ng-controller="usercontroller">
+		<!-- ---------------- -->
+		<div class="container-fluid">
+			<h1>ASHRAB PHARMACY</h1>
+			<p>ashrab Pharmacy Moto</p>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<p>
+						<b>Search Category:</b>
+					</p>
+					<select id="inputState" class="form-control">
+						<option selected>Medicine</option>
+						<option>Company</option>
+						<option>Generics</option>
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<p>
+						<b>Medicine Name:</b>
+					</p>
+					<input type="text" name="medicine" id="medicine" ng-model="medicine"
+						ng-keyup="complete(medicine)" class="form-control" />
+					<ul class="list-group" ng-model="hidethis" ng-hide="hidethis">
+						<li class="list-group-item"
+							ng-repeat=" medicinedata in filterCountry"
+							ng-click="fillTextbox(medicinedata)">{{medicinedata.name}}</li>
+					</ul>
+				</div>
+				<!-- "medicine as medicine.name for medicine in medicines" -->
+				<div class="form-group col-md-3">
+					<p>
+						<b>Medicine Quantity:</b>
+					</p>
+					<input type="number" class="form-control" id="quantity" min="1"  ng-model="quantity"
+						placeholder="Medicine Quantity">
+				</div>
+				<div class="form-group col-md-2">
+					<p>
+						<b> Save Button</b>
+					</p>
+					<button type="button" id="medicineAddBtn" name="medicineAddBtn"
+					ng-click="addToOrder()"	class="btn btn-success">ADD MEDICINE</button>
+				</div>
+			</div>
+			</br>
+			</br>
+			<!-- --------Medicine List--------- -->
+			<div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Medicine</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">TotalPrice</th>
+							<th scope="col">Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="order in finalOrder" finalOrder>
+							<th scope="row">#</th>
+							<td>{{order.product.name}}</td>
+							<td>{{order.quantity}}</td>
+							<td>{{order.quantity*order.product.priceIP}}</td>
+							<td><button class="btn btn-danger">X</button></td>
+						</tr>
+						<tr>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col" ng-model="totalAmount">Total Amount(TK):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  {{totalAmount}}</th>
+							<th scope="col" ng-model="totalAmount"></th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- --------+++++++++++++++++--------- -->
+			<div>
+				<button type="button" id="companyBtn" name="medicineBtn"
+					class="btn btn-success" data-toggle="modal"
+					data-target="#customerInfoModal">Save And Print</button>
+				<button type="button" id="companyBtn" name="medicineBtn"
+					class="btn btn-success" data-toggle="modal"
+					data-target="#customerInfoModal">Save</button>
+			</div>
 
-<!--  modal For Add Medicine -->
+
+
+		</div>
+		
+	<!-- __________________________________modal For Add Medicine______________________________ -->
+<!--   -->
 <!-- Modal -->
 <div class="modal fade" id="customerInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -78,9 +147,9 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label class="control-label col-sm-2" for="genericsName">Total Amount:</label>
+		    <label class="control-label col-sm-2" for="genericsName" >Total Amount: </label>
 		    <div class="col-sm-10">
-		      <input type="number" class="form-control" id="genericsName" placeholder=""  ng-model="medicinePrice">
+		      <input type="number" class="form-control" id="genericsName" placeholder=""  ng-model="totalAmount">
 		    </div>
 		  </div>
 		  	<div class="form-group">
@@ -104,13 +173,66 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-</div>
+		
+	</div>
 </body>
 </html>
+<script>
+	var app = angular.module("myapp", []);
+	app.controller("usercontroller", function($scope, $http) {
+		
+		var tempFinalOrder=[];
+		var productCounter=0;
+		var selected;
+		$scope.totalAmount=0;
+   		function loadMedicine(){
+			  $http({
+				    method : "GET",
+				      url : "/product/"
+				  }).then(function mySuccess(response) {
+					 // alert(response.data[0].name);
+					  $scope.medicineList = response.data;
+					 // alert(  $scope.medicineList);
+					  
+				  }, function myError(response) {
+				   alert("No Medicine Found");
+				  });
+		};
+		loadMedicine(); 
+	
+		$scope.complete = function(string) {
+			//alert($scope.medicineList[0])
+			$scope.hidethis = false;
+			if(string==""){	$scope.hidethis =true;	}
+			var output = [];
+			angular.forEach($scope.medicineList, function(medicine) {
+				if (medicine.name.toLowerCase().indexOf(string.toLowerCase()) >= 0) {
+					output.push(medicine);
+				}
+			});
+			$scope.filterCountry = output;
+		}
+		$scope.fillTextbox = function(data) {
+				$scope.medicine = data.name;
+				selected=data;
+				$scope.hidethis = true;
+		
+		}
+		$scope.addToOrder= function() {
+			if($scope.medicine!="" && $scope.quantity !="" && selected !=""){
+				var tempObj={"product":selected,"quantity":$scope.quantity};
+				$scope.totalAmount+=Number(selected.priceIP)* Number($scope.quantity);
+				selected="";
+				$scope.quantity="";
+				$scope.medicine="";
+				tempFinalOrder.push(tempObj);
+				$scope.finalOrder=tempFinalOrder;
+			}else{
+				alert("Product Name and Product Quantity Must Not Be Empty");
+			}
+		}
+		
+		
+		
+	});
+</script>

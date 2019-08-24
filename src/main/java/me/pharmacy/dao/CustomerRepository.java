@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import me.pharmacy.model.Customer;
  
  public interface CustomerRepository extends CrudRepository<Customer,Integer>{
- 
+ /*
      @Query("SELECT a FROM Customer a WHERE a.is_delete=false")
      public List<Customer> findAll();
      
@@ -34,7 +34,7 @@ import me.pharmacy.model.Customer;
      
      */
      
-     
+     /*
      
      @Query("SELECT SUM((a.total_price-((a.comision*a.totalPrice)/100))) FROM Customer a WHERE a.createdAt BETWEEN :statDate AND :endDate AND a.is_delete=false ")
      Integer findTotalEarnByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
@@ -52,7 +52,7 @@ import me.pharmacy.model.Customer;
     Integer findTotalDueByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
      
     
-    
+    */
     
      
      /*
