@@ -84,11 +84,11 @@ li:hover {
 					</thead>
 					<tbody>
 						<tr ng-repeat="order in finalOrder" finalOrder>
-							<th scope="row">#</th>
+							<th scope="row">{{ $index+1	}}</th>
 							<td>{{order.product.name}}</td>
 							<td>{{order.quantity}}</td>
 							<td>{{order.quantity*order.product.priceIP}}</td>
-							<td><button class="btn btn-danger">X</button></td>
+							<td><button class="btn btn-danger" ng-click="removeOrder(order,$index)">X</button></td>
 						</tr>
 						<tr>
 							<th scope="col"></th>
@@ -190,9 +190,7 @@ li:hover {
 				    method : "GET",
 				      url : "/product/"
 				  }).then(function mySuccess(response) {
-					 // alert(response.data[0].name);
 					  $scope.medicineList = response.data;
-					 // alert(  $scope.medicineList);
 					  
 				  }, function myError(response) {
 				   alert("No Medicine Found");
@@ -203,12 +201,15 @@ li:hover {
 		$scope.complete = function(string) {
 			//alert($scope.medicineList[0])
 			$scope.hidethis = false;
-			if(string==""){	$scope.hidethis =true;	}
+			if(!string){	$scope.hidethis =true;	}
 			var output = [];
 			angular.forEach($scope.medicineList, function(medicine) {
-				if (medicine.name.toLowerCase().indexOf(string.toLowerCase()) >= 0) {
-					output.push(medicine);
+				if(medicine.name){
+					if (medicine.name.toLowerCase().indexOf(string.toLowerCase()) >= 0) {
+						output.push(medicine);
+					}
 				}
+				
 			});
 			$scope.filterCountry = output;
 		}
@@ -219,7 +220,7 @@ li:hover {
 		
 		}
 		$scope.addToOrder= function() {
-			if($scope.medicine!="" && $scope.quantity !="" && selected !=""){
+			if($scope.medicine && $scope.quantity  && selected ){
 				var tempObj={"product":selected,"quantity":$scope.quantity};
 				$scope.totalAmount+=Number(selected.priceIP)* Number($scope.quantity);
 				selected="";
@@ -231,7 +232,19 @@ li:hover {
 				alert("Product Name and Product Quantity Must Not Be Empty");
 			}
 		}
+		$scope.removeOrder= function(order,orderindex) {
+		 	tempFinalOrder = $scope.finalOrder.filter((value, index,tempFinalOrder)=>{
+		 		if(value.product.medicine_id==order.product.medicine_id && orderindex==index){
+		 			$scope.totalAmount-=Number(order.product.priceIP)* Number(order.quantity);
+		 			return false;
+		 		}return true;
+			}); 
+		 	$scope.finalOrder=tempFinalOrder;
+		 	tempFinalOrder=[];
+		}
 		
+		
+
 		
 		
 	});

@@ -1,6 +1,7 @@
 package me.pharmacy.model;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,24 +34,20 @@ public class Medicine {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int medicine_id;
 	private String name;
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-	@JsonIgnore
-	private MedicineCompany company;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "generic_id")
-	@JsonIgnore
-	private MedicineGeneric generic;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "type_id")
-	@JsonIgnore
-	private MedicineType type;
-	@OneToMany(mappedBy = "product")
-	private List<Sales> sales;
+	private Integer company_id;
+	private Integer generic_id;
+	private Integer type_id;
 	private String description;
 	private String dosage;
 	private float priceIP;
 	private boolean is_delete=false;
+	private Date createdAt;
+
+			
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
 
 }
 

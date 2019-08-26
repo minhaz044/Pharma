@@ -29,7 +29,7 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int customer_id;
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer_id")
 	private List<Sales> sales;
 	private String customerName;
 	private String customerContactNo;
@@ -37,9 +37,7 @@ public class Customer {
 	private int due;
 	private int comision;
 	private Date createdAt;
-	@ManyToOne
-	@JoinColumn(name = "id")
-	private Person salesBy;
+	private Integer salesBy;
 	private boolean is_delete=false;
 			
 	@PrePersist

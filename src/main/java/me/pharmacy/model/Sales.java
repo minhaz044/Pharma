@@ -1,12 +1,15 @@
 package me.pharmacy.model;
 
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,16 +30,17 @@ public class Sales {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int sales_id;
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	@JsonIgnore
-	private Customer customer;
-	@ManyToOne
-	@JoinColumn(name = "product_id")
-	@JsonIgnore
-	private Medicine product;
+	private Integer customer_id;
+	private Integer product_id;
 	private float comision;
 	private int quantity;
 	private boolean is_delete=false;
+	private Date createdAt;
+
+	
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
 
 }
