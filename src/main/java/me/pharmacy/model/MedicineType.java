@@ -29,8 +29,6 @@ public class MedicineType {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	@OneToMany(mappedBy = "type_id")
-	private List<Medicine> medicines;
 	private boolean is_delete=false;
 	private Date createdAt;
 

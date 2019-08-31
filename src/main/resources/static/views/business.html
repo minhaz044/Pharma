@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+           <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> 
+<style>
+li {
+	cursor: pointer;
+}
+
+li:hover {
+	background-color: #f9f9f9;
+}
+</style>
+</head>
+<body>
+	<div ng-app="myapp" ng-controller="usercontroller">
+		<!-- ---------------- -->
+		<div class="container-fluid">
+			<h1>ASHRAB PHARMACY</h1>
+			<p>ashrab Pharmacy Moto</p>
+			<div class="form-row">
+				<div class="form-group col-md-2">
+					<p>
+						<b>Date (From):</b>
+					</p>
+					<input type="date" name="bdaytime"  ng-model="date_from">
+				</div>
+				<div class="form-group col-md-2">
+					<p>
+						<b>Date (to):</b>
+					</p>
+					<input type="date" name="bdaytime"  ng-model="date_to">
+				</div>
+								<div class="form-group col-md-2">
+					<p>
+						<b>Search:</b>
+					</p>
+					<button type="button" id="companyBtn" name="medicineBtn"
+					class="btn btn-success"  ng-click="onClickCompanyBtnSubmit()">Save</button>
+				</div>			
+
+			</div>
+			</br>
+			</br>
+
+
+
+<!-- --------Medicine List--------- -->
+			<div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Date</th>
+							<th scope="col">Total Sell</th>
+							<th scope="col">Total Comision</th>
+							<th scope="col">Total Due</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="salesSatic in salesSatics" finalOrder>
+							<th scope="row">{{ $index+1	}}</th>
+							<td>{{salesSatic.date | date:'dd-MMM-yyyy'}}</td>
+							<td>{{salesSatic.totalSalesValue}}</td>
+							<td>{{salesSatic.totalComisionValue}}</td>
+							<td>{{salesSatic.totalDueValue}}</td>
+						</tr>
+						<tr>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+							<th scope="col" ng-model="totalAmount">Total Due(TK):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  {{totalAmount}}</th>
+							<th scope="col" ng-model="totalAmount"></th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- --------+++++++++++++++++--------- -->
+
+		</div>
+		
+
+		
+	</div>
+</body>
+</html>
+<script>
+	var app = angular.module("myapp", []);
+	app.controller("usercontroller", function($scope, $http) {
+	$scope.onClickCompanyBtnSubmit=function(){
+	if($scope.date_from && $scope.date_to){
+	var date_from =$scope.date_from.getFullYear()+"-"+($scope.date_from.getMonth()+1)+"-"+$scope.date_from.getDate()+" "+"00:00:00"; 
+	var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"00:00:00"; 
+	console.log(date_from);
+	console.log(date_to);
+
+		$http({
+			method : "GET",
+			url : "/business/date"+"?"+"from="+date_from+"&to="+date_to
+			}).then(function mySuccess(response) {
+				$scope.salesSatics = response.data;
+				console.log(response.data);
+			}, function myError(response) {
+			$scope.myWelcome = response.statusText;
+			});
+		}
+
+	  }; 
+		
+
+		
+	});
+</script>

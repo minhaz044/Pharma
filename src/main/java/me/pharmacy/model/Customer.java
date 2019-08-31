@@ -30,14 +30,16 @@ public class Customer {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int customer_id;
 	@OneToMany(mappedBy = "customer_id")
-	private List<Sales> sales;
+	private List<SalesProduct> sales;
 	private String customerName;
 	private String customerContactNo;
 	private int totalPrice;
-	private int due;
+	private int payment;
 	private int comision;
 	private Date createdAt;
-	private Integer salesBy;
+	@ManyToOne
+	@JoinColumn(name = "salesBy")
+	private Person salesBy;
 	private boolean is_delete=false;
 			
 	@PrePersist

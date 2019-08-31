@@ -18,22 +18,26 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+/*
+ * @NoArgsConstructor
+ * 
+ * @AllArgsConstructor
+ */
 @Entity
 @Table(name="person")
 public class Person {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int person_id;
-	private String name;
-	@OneToMany(mappedBy = "salesBy")
-	private List<Customer> customers;
-	private Date createdAt;
-
 	
-	@PrePersist
-	protected void onCreate() {
-		createdAt = new Date();
-	}
+	 @Id
+	  @GeneratedValue(strategy=GenerationType.IDENTITY) 
+	 private int person_id;
+	 private String name; 
+	  ///@OneToMany(mappedBy = "salesBy") 
+	  //private List<Customer> customers;
+	 private Date createdAt;
+	  
+	  
+	  @PrePersist protected void onCreate() { 
+		  createdAt = new Date();
+		  }
+	 
 }

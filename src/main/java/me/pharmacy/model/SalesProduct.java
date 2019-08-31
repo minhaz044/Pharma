@@ -2,16 +2,13 @@ package me.pharmacy.model;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -21,41 +18,30 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="medicine")
-public class Medicine {
+@Table(name="sales")
+public class SalesProduct {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int medicine_id;
-	private String name;
-	private Integer company_id;
-	private Integer generic_id;
-	@ManyToOne
-	@JoinColumn(name = "type_id")
-	private MedicineType type;
-	private String description;
-	private String dosage;
-	private float priceIP;
+	private int sales_id;
+	private Integer customer_id;
+	private Integer product_id;
+	private float comision;
+	private Double quantity;
 	private boolean is_delete=false;
 	private Date createdAt;
 
-			
+	
 	@PrePersist
 	protected void onCreate() {
 		createdAt = new Date();
 	}
 
 }
-
-
-
-
-
-
-

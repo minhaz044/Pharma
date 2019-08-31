@@ -3,26 +3,27 @@
  */
 package me.pharmacy.model;
 
-import java.util.List;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * @author Minhaz Uddin
  *
  * Aug 30, 2019
  */
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-public class Sales {
-	private Medicine product;
-	private Double quantity;
+
+
+public interface SalesStatics {
+	 Double getTotalSalesValue();
+	 Double getTotalComisionValue();
+	 Double getTotalDueValue();
+	 Date getDate();
+	 
+	
 
 }
+
