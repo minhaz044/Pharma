@@ -14,9 +14,19 @@ public class HomeController {
 		mv.setViewName("views/index.html");
 		return mv;
 	}
-	  @GetMapping("/business") public ModelAndView SalesStatus() {
+	  @GetMapping("/business") public ModelAndView Business() {
 		  ModelAndView mv=new ModelAndView();
 		  mv.setViewName("views/business.html");
+		 return mv; 
+	  }
+	  @GetMapping("/sales") public ModelAndView SalesStatus() {
+		  ModelAndView mv=new ModelAndView();
+		  mv.setViewName("views/sales.html");
+		 return mv; 
+	  }
+	  @GetMapping("/expense") public ModelAndView ExpenseStatus() {
+		  ModelAndView mv=new ModelAndView();
+		  mv.setViewName("views/expense.html");
 		 return mv; 
 	  }
 	@GetMapping("/home")

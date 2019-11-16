@@ -23,6 +23,8 @@
 	<button type="button" id="companyBtn"name="medicineTypeBtn" class="btn btn-primary" data-toggle="modal" data-target="#medicineTypeModal">Add Medicine Type</button>
 	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#medicineModal">Add Medicine </button>
 	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#salesPersonModal">Add Sales Person </button>
+	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#ExpenseModal">Add Expense </button>
+	
 	<a href="/shop" class="btn btn-primary" type="button" id="companyBtn"name="medicineBtn" >Enter Into Shop</a>
 	<a href="/business" class="btn btn-primary" type="button" id="companyBtn"name="medicineBtn" >Business Analysis</a>
 </div>
@@ -251,9 +253,64 @@
 
 
 
-
-
-
+<!--  modal For Add Expense -->
+<!-- Modal -->
+<div class="modal fade" id="ExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Expense</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       	<form class="form-horizontal" action="#">
+		  <div class="form-group has-error has-feedback">
+		    <label class="control-label col-sm-2" for="expenseFor">Company:</label>
+		    <div class="col-sm-10"> 
+		      <input type="text" class="form-control" id="expenseFor" placeholder="Enter Company  Name" ng-model="expenseFor">
+		    </div>
+		  </div>
+		  <div class="form-group ">
+		    <label class="control-label col-sm-2" for="recivePerson">CollectedBy:</label>
+		    <div class="col-sm-10"> 
+		      <input type="text" class="form-control" id="recivePerson" placeholder="Enter Company RePresentative Name" ng-model="recivePerson">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="control-label col-sm-2" for="expenseRefInfo">ReferenceNo:</label>
+		    <div class="col-sm-10"> 
+		      <input type="text" class="form-control" id="expenseRefInfo" placeholder="Enter Reference information" ng-model="expenseRefInfo">
+		    </div>
+		  </div>
+		 <div class="form-group has-error has-feedback">
+		    <label class="control-label col-sm-2" for="expenseAmount">Amount(TK)*:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="expenseAmount" placeholder="Enter Expense Amount"  ng-model="expenseAmount">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label class="control-label col-sm-2" for="expenseDetail">Detail:</label>
+		    <div class="col-sm-10"> 
+		      <input type="text" class="form-control" id="expenseDetail" placeholder="Enter Reference information" ng-model="expenseDetail">
+		    </div>
+		  </div>
+		  <div class="form-group has-error has-feedback">
+		    <label class="control-label col-sm-2" for="expenseDate">Date:</label>
+		    <div class="col-sm-10"> 
+		      <input type="date" class="form-control" id="expenseDate" ng-model="expenseDate">
+		    </div>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button  ng-click="onClickExpenseBtnSubmit()" class="btn btn-primary">Save Expense</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 </body>
@@ -356,7 +413,39 @@
 			  alert("Operation Failed"+error.data);
 			});
 	};
-			/**************************Type Save Button**********************/
+	/**************************Expense Save Button**********************/
+	$scope.onClickExpenseBtnSubmit=function(){
+		if(!$scope.expenseFor || !$scope.expenseAmount || !$scope.expenseDate){
+			alert("Red Color Field Must Not be Empty");
+			return ;
+		}
+		var expense={
+				"expenseBy":{"person_id":1},
+				"expenseFor":$scope.expenseFor,
+				"recivePerson":$scope.recivePerson,
+				"expenseDetail":$scope.expenseDetail,
+				"expenseAmount":$scope.expenseAmount,
+				"expenseDate":$scope.expenseDate,
+				"expenseRefInfo":$scope.expenseRefInfo
+				};
+		  $http({
+			  method: 'POST',
+			  url:"/expense/add",
+			  data: JSON.stringify(expense)
+			}).then(function (success) {
+				$("#ExpenseModal").modal("hide");
+				$scope.expenseFor='';
+				$scope.recivePerson='';
+				$scope.expenseDetail='';
+				$scope.expenseAmount='';
+				$scope.expenseDate='';
+				$scope.expenseRefInfo='';
+			  alert("Expense Added SucessFully");
+			}, function (error) {
+			  alert("Operation Failed"+error.data);
+			});
+	};
+	/**************************Type Save Button**********************/
 	$scope.onClickMedicineTypeBtnSubmit=function(){
 		if(!$scope.medicineType){
 			alert("Medicine Type  Must Not Be Empty");
@@ -406,9 +495,6 @@
 			alert("All Red Color Field Must Not Be Empty");
 			return ;
 		}
-		
-		
-		
 		var medicine={
 			"name":$scope.medicineName,
 			"company_id":$scope.medicineCompany,
