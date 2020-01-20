@@ -45,7 +45,7 @@ public class Expense {
 	public double expenseAmount;
 	public Date expenseDate;
 	private Date createdAt;
-
+	private boolean is_delete=false;
 	
 	@PrePersist
 	protected void onCreate() {

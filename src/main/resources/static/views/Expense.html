@@ -26,8 +26,8 @@ li:hover {
 	<div ng-app="myapp" ng-controller="usercontroller">
 		<!-- ---------------- -->
 		<div class="container-fluid">
-			<h1>ASHRAB PHARMACY</h1>
-			<p>Ashrab Pharmacy Moto</p>
+		<!-- 	<h1>ASHRAB PHARMACY</h1>
+			<p>Ashrab Pharmacy Moto</p> -->
 			<div class="form-row">
 				<div class="form-group col-md-2">
 					<p>
@@ -46,7 +46,7 @@ li:hover {
 						<b>Search:</b>
 					</p>
 					<button type="button" id="companyBtn" name="medicineBtn"
-					class="btn btn-success"  ng-click="onClickCompanyBtnSubmit()">Save</button>
+					class="btn btn-success"  ng-click="onClickExpenseSearchBtnSubmit()">Search</button>
 				</div>			
 
 			</div>
@@ -62,24 +62,21 @@ li:hover {
 						<tr>
 							<th >#</th>
 							<th >Date</th>
-							<th >Total Sell</th>
-							<th >Total Comision</th>
-							<th >Total Due</th>
+							<th >Total</th>
+							<th >Details</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="salesSatic in salesSatics" finalOrder>
+						<tr ng-repeat="expenseSatic in expenseSatics" finalOrder>
 							<th scope="row">{{ $index+1	}}</th>
-							<td>{{salesSatic.date | date:'dd-MMM-yyyy'}}</td>
-							<td>{{salesSatic.totalSalesValue}}</td>
-							<td>{{salesSatic.totalComisionValue}}</td>
-							<td>{{salesSatic.totalDueValue}}</td>
+							<td>{{expenseSatic.date | date:'dd-MMM-yyyy'}}</td>
+							<td> {{expenseSatic.totalExpenseAmount}} </td>
+						<!-- 	<td>{{expenseSatic.totalDueValue}}</td> -->
 						</tr>
 						<tr>
 							<th scope="col"></th>
 							<th scope="col"></th>
-							<th scope="col"></th>
-							<th scope="col" ng-model="totalAmount">Total Due(TK):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  {{totalAmount}}</th>
+							<th scope="col" ng-model="totalAmount">Total (TK):&nbsp  {{totalAmount}}</th>
 							<th scope="col" ng-model="totalAmount"></th>
 						</tr>
 					</tbody>
@@ -94,3 +91,28 @@ li:hover {
 	</div>
 </body>
 </html>
+<script>
+	var app = angular.module("myapp", []);
+	app.controller("usercontroller", function($scope, $http) {
+	$scope.onClickExpenseSearchBtnSubmit=function(){
+
+	if($scope.date_from && $scope.date_to){
+	var date_from =$scope.date_from.getFullYear()+"-"+($scope.date_from.getMonth()+1)+"-"+$scope.date_from.getDate()+" "+"00:00:00"; 
+	var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"00:00:00"; 
+		$http({
+			method : "GET",
+			url : "/expense/date"+"?"+"from="+date_from+"&to="+date_to
+			}).then(function mySuccess(response) {
+				$scope.expenseSatics = response.data;
+			}, function myError(response) {
+				alert("Search Failed");
+			$scope.myWelcome = response.statusText;
+			});
+		}
+
+	  }; 
+		
+
+		
+	});
+</script>
