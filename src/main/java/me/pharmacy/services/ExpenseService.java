@@ -35,10 +35,10 @@ public class ExpenseService {
 	
 	public List<Expense> getAllExpenseBetweenDate(String startDate,String endDate) throws ParseException{
 		 DateFormat df  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		 List<SalesStatics> salesStatics=new ArrayList<SalesStatics>();
 		 Date date_from =df.parse(startDate);
 		 Date date_to =df.parse(endDate);
-		return expenseRepository.findAllByDate(date_from, date_to);
+		 List<Expense> test=expenseRepository.findAllByDate(date_from,date_to);
+		return test;
 	}
 
 	public List<ExpenseStatics> expenseStatics(String  startDate, String endDate) throws ParseException{
@@ -55,10 +55,12 @@ public class ExpenseService {
 		while(date_to.compareTo(date_from) >0 || date_to.compareTo(date_from) ==0) {
 			c.setTime(date_from);
 			c.add(Calendar.DATE, 1);
+			c.add(Calendar.SECOND,-1);
 			nextDate =c.getTime();
 			ExpenseStatics statics =expenseRepository.findTotalExpenseByDate(date_from,nextDate);
 			expenseStatics.add(statics);
-			date_from=nextDate;
+			c.add(Calendar.SECOND,1);
+			date_from=c.getTime();
 		}
 		expenseStatics.sort((ss1,ss2)-> 0-ss1.getDate().compareTo(ss2.getDate()));
 		return expenseStatics;

@@ -32,10 +32,11 @@ public class ExpenseController {
 	public Expense addExpense(@RequestBody Expense expense) {
 		return expenseService.addExpense(expense);
 	}
-	
-	public List<Expense> getExpenseBetweenDate(@RequestParam("startDate") String startDate ,@RequestParam("endDate") String endDate ) throws ParseException{
-		return expenseService.getAllExpenseBetweenDate(startDate, endDate);
+	@GetMapping("/date/all")
+	public List<Expense> getExpenseBetweenDate(@RequestParam("from") String from ,@RequestParam("to") String to ) throws ParseException{
+		return expenseService.getAllExpenseBetweenDate(from,to);
 	}
+
 
 	@GetMapping("/date")
 	public List<ExpenseStatics> getTodaySalesStatus(@RequestParam("from") String from , @RequestParam("to") String to) throws ParseException {

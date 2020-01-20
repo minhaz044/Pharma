@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import me.pharmacy.dao.ExpenseStatics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,18 +53,17 @@ public class BusinessAnalysisService {
 		  while(date_to.compareTo(date_from) >0 || date_to.compareTo(date_from) ==0) {
 				c.setTime(date_from);
 				c.add(Calendar.DATE, 1);
+			  	c.add(Calendar.SECOND,-1);
 				nextDate =c.getTime();
 				SalesStatics statics =customerRepository.findAllSalesByDate(date_from,nextDate);
 				salesStatics.add(statics);
-				date_from=nextDate;
-				
+			  	c.add(Calendar.SECOND,1);
+			  	date_from=c.getTime();
 		  }
 		
 		salesStatics.sort((ss1,ss2)-> 0-ss1.getDate().compareTo(ss2.getDate()));
 		return salesStatics;
 	}
-	
-	
 	
 
 }

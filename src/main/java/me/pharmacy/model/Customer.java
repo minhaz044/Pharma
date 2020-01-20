@@ -33,9 +33,10 @@ public class Customer {
 	private List<SalesProduct> sales;
 	private String customerName;
 	private String customerContactNo;
-	private int totalPrice;
-	private int payment;
-	private int comision;
+	private double totalPrice;
+	private double payment;
+	private double comision;
+	private double cashBackAmount;
 	private Date createdAt;
 	@ManyToOne
 	@JoinColumn(name = "salesBy")

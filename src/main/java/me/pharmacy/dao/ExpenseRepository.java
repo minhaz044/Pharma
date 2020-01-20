@@ -21,9 +21,9 @@ import me.pharmacy.model.Expense;
  * Nov 16, 2019
  */
 public interface ExpenseRepository  extends CrudRepository<Expense,Integer>{
-    @Query(value="SELECT * FROM Expense a WHERE a.is_delete=0 AND a.created_at between :startDate AND :endDate",nativeQuery =true)
+    @Query(value="SELECT * FROM Expense a WHERE a.is_delete=0 AND a.expense_date between :startDate AND :endDate",nativeQuery =true)
     public List<Expense> findAllByDate(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
-    @Query(value=" SELECT SUM(a.expense_amount) as totalExpenseAmount ,:startDate as date FROM Expense a WHERE a.created_at BETWEEN :startDate AND :endDate AND  a.is_delete=0 ",nativeQuery =true)
+    @Query(value=" SELECT SUM(a.expense_amount) as totalExpenseAmount ,:startDate as date FROM Expense a WHERE a.expense_date BETWEEN :startDate AND :endDate AND  a.is_delete=0 ",nativeQuery =true)
     public ExpenseStatics findTotalExpenseByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }

@@ -101,7 +101,7 @@ li:hover {
 	$scope.onClickCompanyBtnSubmit=function(){
 	if($scope.date_from && $scope.date_to){
 	var date_from =$scope.date_from.getFullYear()+"-"+($scope.date_from.getMonth()+1)+"-"+$scope.date_from.getDate()+" "+"00:00:00"; 
-	var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"00:00:00"; 
+	var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"23:59:59"; 
 	console.log(date_from);
 	console.log(date_to);
 
