@@ -27,8 +27,7 @@ public class SalesPersonController {
 	protected List<Person> getSalesPerson() {
 		return personService.getAllPerson();
 	}
-	
-	
+
 	@RequestMapping(value = "/add",method = RequestMethod.POST)
 	protected Person addSalesPerson(@RequestBody Person person) {
 		return personService.savePerson(person);

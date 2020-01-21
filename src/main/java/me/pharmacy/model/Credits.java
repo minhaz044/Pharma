@@ -9,26 +9,25 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by Minhaz on 1/20/2020.
+ * Created by Minhaz on 1/21/2020.
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="customer_info")
-public class CustomerInfo {
+@Table(name="credits")
+public class Credits {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int customerInfoId;
-    private String name;
-    private String address;
-    private String contact;
-    @Column(unique=true)
-    private String userName;
-    private String password;
-    private Double totalAmount;
-    private Double totalUses;
+    private int id;
+    private double amount;
+    @ManyToOne
+    @JoinColumn(name = "customerInfoId")
+    private CustomerInfo customerInfoId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer_id;
     private Date createdAt;
     private boolean is_delete=false;
 
@@ -36,5 +35,4 @@ public class CustomerInfo {
     protected void onCreate() {
         createdAt = new Date();
     }
-
 }

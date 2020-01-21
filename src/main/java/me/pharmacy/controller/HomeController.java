@@ -47,4 +47,10 @@ public class HomeController {
 		mv.setViewName("views/shop1.html");
 		return mv;
 	}
+	@GetMapping("/success")
+	protected ModelAndView success() {
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("views/success.html");
+		return mv;
+	}
 }

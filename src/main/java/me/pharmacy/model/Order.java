@@ -24,4 +24,6 @@ import lombok.Setter;
 public class Order {
 	private List<Sales>orders;
 	private Customer customer;
+	private Double creditAmount;
+	private int userInfoId;
 }

@@ -36,6 +36,7 @@ public class Customer {
 	private double totalPrice;
 	private double payment;
 	private double comision;
+	private int customerInfoId;
 	private double cashBackAmount;
 	private Date createdAt;
 	@ManyToOne

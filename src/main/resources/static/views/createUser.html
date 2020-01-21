@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script
+    src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+           <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> 
+</head>
+<body>
+
+<div class="container" ng-app="myapp" ng-controller="accountcontroller">
+    <h2>Add New Customer</h2>
+    <form action="/create" method="POST">
+        <div class="form-group">
+            <label for="contact">Email/Phone</label>
+            <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter email/phone" required>
+        </div>
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input type="text" minlength="5" class="form-control" id="userName" name="userName" ng-model="userName" ng-keyup="complete(userName)">
+            <small id="warning" class="form-text text-muted text-danger" ng-model="hidethis" ng-hide="hidethis">userName already used.</small>
+        </div>
+        <button type="submit" id="adduserbtn" name="adduserbtn" ng-model="adduserbtn" ng-hide="adduserbtn" class="btn btn-primary">Add User</button>
+    </form>
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+    var app = angular.module("myapp", []);
+    app.controller("accountcontroller", function($scope, $http) {
+         $scope.hidethis = true;
+         $scope.adduserbtn =true;
+        $scope.complete = function(string) {
+            if(string && string.length >4 ){
+                $scope.adduserbtn =false;
+                getUserInfo(string);
+            }else{
+                $scope.adduserbtn =true;
+            }
+        }
+
+        function getUserInfo(userName){
+              $http({
+                    method : "GET",
+                      url : "/user?userName="+userName
+                  }).then(function mySuccess(response) {
+                    console.log(response.data)
+                    if(response.data){
+                      $scope.hidethis =false;
+                      $scope.adduserbtn =true;
+                    }else{
+                        $scope.hidethis =true;
+                        $scope.adduserbtn =false;
+                    }
+                  }, function myError(response) {
+                    console.log(response)
+                   alert("Service Not Working");
+                });
+        };
+
+    });
+
+
+</script>

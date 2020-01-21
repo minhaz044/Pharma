@@ -27,8 +27,8 @@ li:hover {
 	<div ng-app="myapp" ng-controller="usercontroller">
 		<!-- ---------------- -->
 		<div class="container-fluid">
-			<h1>ASHRAB PHARMACY</h1>
-			<p>ashrab Pharmacy Moto</p>
+<!-- 			<h1>ASHRAB PHARMACY</h1>
+			<p>ashrab Pharmacy Moto</p> -->
 			<div class="form-row">
 				<div class="form-group col-md-2">
 					<p>
@@ -121,7 +121,7 @@ li:hover {
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLabel">Sales Information ghfdgkfghk</h3>
+        <h3 class="modal-title" id="exampleModalLabel">Sales Information </h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -129,22 +129,33 @@ li:hover {
       <div class="modal-body">
        	<form class="form-horizontal" action="#">
        		  <div class="form-check">
-			    <label >
-			    <input type="checkbox" class="form-check-input" id="cashBackCheck" ng-model="cashBack">
-			    Add To CashBack Policy. 
-			</label>
+			    <label>
+			    	<input type="checkbox" class="form-check-input" id="cashBack" ng-model="cashBack" ng-change="cashBackCheck()" ng-true-value='true'ng-false-value='false'>
+			    	Add To CashBack Policy. 
+				</label>
 			  </div>
-
-  			<div class="form-group">
+  			<div class="form-group" ng-hide="hideUserName">
+		    <label class="control-label col-sm-2" for="medicineName">User Name:</label>
+		    <div class="col-sm-10">
+				<input type="text" name="UserName" id="UserName" ng-model="UserName"
+						ng-keyup="searchUserName(UserName)" class="form-control" />
+					<ul class="list-group" ng-model="userNameSugList" ng-hide="hideUserNameSugList">
+						<li class="list-group-item"
+							ng-repeat=" user in userList"
+							ng-click="fillUserNamebox(user)">{{user.userName}}</li>
+					</ul>
+				</div>
+		  </div>
+  			<div class="form-group" ng-hide="hideCustomerName">
 		    <label class="control-label col-sm-2" for="medicineName">Customer Name:</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="customerName">
+		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="customerName" >
 		    </div>
 		  </div>
-		   <div class="form-group">
+		   <div class="form-group" ng-hide="hideCustomerContact">
 		    <label class="control-label col-sm-2" for="medicineName">Customer Contact Number:</label>
 		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="customerContactNo">
+		      <input type="text" class="form-control" id="medicineName" placeholder="Enter Medicine Name"  ng-model="customerContactNo"> 
 		    </div>
 		  </div>
 		  	<div class="form-group">
@@ -163,6 +174,12 @@ li:hover {
 		    <label class="control-label col-sm-2" for="genericsName">Total Amount(With Commision):</label>
 		    <div class="col-sm-10">
 		      <input type="number" class="form-control" id="genericsName" placeholder=""  ng-model="medicinePriceWithComision" readonly>
+		    </div>
+		  </div>
+		  <div class="form-group" ng-hide="hideCashbackAmount">
+		    <label class="control-label col-sm-2" for="genericsName">Cashback Amount:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="genericsName" placeholder=""  ng-model="cashbackAmount">
 		    </div>
 		  </div>		  
 		 <div class="form-group">
@@ -188,9 +205,11 @@ li:hover {
 	var app = angular.module("myapp", []);
 	app.controller("usercontroller", function($scope, $http) {
 		
+
 		var tempFinalOrder=[];
 		var productCounter=0;
 		var selected;
+		var user;
 		$scope.totalAmount=0;
 		$scope.comision=0;
 		$scope.medicinePriceWithComision=0;
@@ -261,25 +280,35 @@ li:hover {
 		$scope.calculateComision= function() {
 			if($scope.comision <=10 && $scope.comision >=0){
 				$scope.medicinePriceWithComision=$scope.totalAmount-( $scope.totalAmount *($scope.comision/100));
-				$scope.customerPaying=$scope.medicinePriceWithComision;
+				if($scope.cashBack ){
+					$scope.cashbackAmount=$scope.totalAmount-$scope.medicinePriceWithComision;
+					$scope.customerPaying=$scope.totalAmount;
+				}else{
+					$scope.cashbackAmount=0;
+					$scope.customerPaying=$scope.medicinePriceWithComision;
+				}
 			}else{
 				alert("Comision Is Exciding Buying Rate");
 				$scope.comision=0;
-				
+				$scope.cashbackAmount=0;
 			}
 
 		}
 
 		$scope.submitOrder= function() {
-			if($scope.totalAmount >0 ){
+			if($scope.totalAmount >0 && (($scope.cashbackAmount>0 && user && $scope.cashBack && !$scope.customerName && !$scope.customerContactNo) || (!$scope.cashbackAmount && !$scope.cashBack )) ){
 			var customer={"customerName":$scope.customerName,
 						  "customerContactNo":$scope.customerContactNo,
 						  "totalPrice":$scope.totalAmount,
 						  "payment":$scope.customerPaying,
 						  "comision":$scope.comision,
+						  "cashBackAmount":$scope.cashbackAmount,
+						  "customerInfoId":user,
 						  "salesBy":{"person_id":1,"name":"Abu Bakkar"}};
 			var orders={"orders":$scope.finalOrder,
-						"customer":customer
+						"customer":customer,
+						"creditAmount":$scope.cashbackAmount,
+						"userInfoId":user
 						};
 						console.log(orders);
 			  $http({
@@ -298,6 +327,9 @@ li:hover {
 					 $scope.finalOrder=[];
 					 tempFinalOrder=[];
 					 selected="";
+					 user='';
+					 $scope.cashbackAmount='';
+					 $scope.medicinePriceWithComision=0;
 					$scope.quantity="";
 					$scope.medicine="";
 					$scope.finalOrder=[];
@@ -310,7 +342,71 @@ li:hover {
 				alert("Information Is not Enough");
 			}
 		}
-		
+	/*------------------------Cash Back Part ----------------*/
+	$scope.cashbackAmount=$scope.medicinePriceWithComision;
+	$scope.cashBack = false;
+	$scope.hideCashbackAmount=true;
+	$scope.hideUserName=true;
+    $scope.cashBackCheck = function(data)
+    {
+    	if($scope.cashBack ){
+    		$scope.hideCustomerName=true;
+    		$scope.hideCustomerContact=true;
+    		$scope.hideCashbackAmount=false;
+    		$scope.hideUserName=false;
+    		$scope.userNameSugList = false;
+    		$scope.customerName='';
+    	 	$scope.customerContactNo='';
+			$scope.cashbackAmount=$scope.totalAmount-$scope.medicinePriceWithComision;
+			$scope.customerPaying=$scope.totalAmount
+    		
+    	}else{
+    		$scope.hideCustomerName=false;
+    		$scope.hideCustomerContact=false;
+    		$scope.hideCashbackAmount=true;
+    		$scope.hideUserName=true;
+			$scope.cashbackAmount='';
+			$scope.UserName='';
+			$scope.customerPaying=$scope.medicinePriceWithComision;
+			
+    	}
+    };
+   	function loadUserName(){
+			$http({
+				method : "GET",
+				url : "/users"
+				}).then(function mySuccess(response) {
+				$scope.userFullList = response.data;
+			}, function myError(response) {
+			alert("Failed To Start Service");
+			});
+	};
+	loadUserName();
+
+		$scope.fillUserNamebox = function(data) {
+			console.log(data)
+				$scope.UserName = data.userName;
+				user=data.customerInfoId;
+				$scope.hideUserNameSugList = true;
+		}
+
+
+
+	$scope.searchUserName = function(name) {
+			//alert($scope.medicineList[0])
+		$scope.hideUserNameSugList = false;
+		if(!name){	$scope.hideUserNameSugList =true;	}
+		var output = [];
+		angular.forEach($scope.userFullList, function(user) {
+			if(user.userName){
+				if (user.userName.toLowerCase().indexOf(name.toLowerCase()) >= 0) {
+					output.push(user);
+				}
+			}	
+		});
+		$scope.userList = output;
+	}
+
 
 		
 		
