@@ -21,6 +21,24 @@ import me.pharmacy.model.SalesStatics;
      
      @Query(value="SELECT * FROM Customer a WHERE a.is_delete=0 AND a.created_at between :startDate AND :endDate",nativeQuery =true)
      public List<Customer> findAllByDate(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
+
+
+
+     @Query(value="SELECT * FROM Customer a WHERE a.is_delete=0 AND a.customer_info_id=:userId",nativeQuery =true)
+     public List<Customer> findByUserId(@Param("userId") int userId);
+
+
+
+
+
+
+
+
+
+
+
+
+
      //@Query(" SELECT a FROM customer a WHERE a.createdAt BETWEEN :statDate AND :endDate AND  a.is_delete=false ")
      //public List<Customer> findAllByDate(@Param("statDate") Date statDate,@Param("endDate") Date endDate);
 /*     

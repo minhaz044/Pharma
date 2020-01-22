@@ -36,7 +36,7 @@ public class SalesController {
 							SalesProduct salesProduct=new SalesProduct();
 							salesProduct.setCustomer_id(customer.getCustomer_id());
 							salesProduct.setComision(0);
-							salesProduct.setProduct_id(sales.getProduct().getMedicine_id());
+							salesProduct.setProduct(sales.getProduct());
 							salesProduct.setQuantity(sales.getQuantity());
 							salesService.saveSalesProduct(salesProduct);
 						}

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import me.pharmacy.model.CustomerInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,22 @@ import me.pharmacy.model.Customer;
 public class CustomerService {
 
 	@Autowired
+	public CustomerInfoService customerInfoService;
+	@Autowired
 	public CustomerRepository customerRepo;
-
 	public Customer saveCustomer(Customer customer) {
 		return customerRepo.save(customer);
 	}
-
+	public List<Customer> getCustomerByUserId(int id){
+		return customerRepo.findByUserId(id);
+	}
+	public List<Customer> getCustomerByUserName(String userName){
+		Optional<CustomerInfo> user=customerInfoService.getCustomerInfo(userName);
+		if(user.isPresent()){
+			return customerRepo.findByUserId(user.get().getCustomerInfoId());
+		}
+		return null;
+	}
 	/*
 	 * List<Map<String,Double>> getAllCustomer(Date startDate,Date endDate){
 	 * 

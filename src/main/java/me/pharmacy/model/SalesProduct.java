@@ -32,13 +32,15 @@ public class SalesProduct {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int sales_id;
 	private Integer customer_id;
-	private Integer product_id;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Medicine product;
 	private float comision;
 	private Double quantity;
 	private boolean is_delete=false;
 	private Date createdAt;
 
-	
+
 	@PrePersist
 	protected void onCreate() {
 		createdAt = new Date();

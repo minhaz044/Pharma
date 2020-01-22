@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script
+            src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body>
+<div class="container" ng-app="myapp" ng-controller="accountcontroller">
+    <h2>Customer Search</h2>
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input type="text" minlength="5" class="form-control" id="userName" name="userName" ng-model="userName">
+        </div>
+        <button type="submit" id="searchbtn" name="searchbtn" ng-model="searchbtn" ng-click=complete(userName)  class="btn btn-primary">Search</button>
+</br><button ng-click=userDetailButton()>User Detail Info</button>
+<div ng-model="userInfoSection" ng-model="userInfoSection" ng-hide="userInfoSection">
+
+<table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr> 
+        <td>customerInfoId</td>
+        <td>{{customerInfo.customerInfoId}}</td>
+      </tr>
+      <tr> 
+        <td>Name</td>
+        <td>{{customerInfo.name}}</td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td>{{customerInfo.address}}</td>
+      </tr>
+      <tr>
+        <td>Contact</td>
+        <td>{{customerInfo.contact}}</td>
+      </tr>
+            <tr>
+        <td>userName</td>
+        <td>{{customerInfo.userName}}</td>
+      </tr>
+       <tr>
+        <td>totalAmount</td>
+        <td>{{customerInfo.totalAmount}}</td>
+      </tr>
+        <tr>
+        <td>totalUses</td>
+        <td>{{customerInfo.totalUses}}</td>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+    </tbody>
+  </table>
+</div> 
+
+
+</br><button ng-click=buyings()>User Buy Info</button>
+<div ng-model="userBuyInfoSection" ng-hide="userBuyInfoSection" ng-show="userBuyInfoSection">
+
+<table class="table">
+   <thead>
+      <th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </th>
+    </thead>
+    <thead>
+        <th>customer_id</th>
+        <th>customerName</th>
+        <th>customerContactNo</th>
+        <th>totalPrice</th>
+        <th>payment</th>
+        <th>comision</th>
+        <th>customerInfoId</th>
+        <th>cashBackAmount</th>
+        <th>createdAt</th>
+        <th>salesBy</th>
+        <th>Product</th>
+    </thead>
+    <tbody>
+       <tr ng-repeat="buy in customerBuy">
+        <td>{{buy.customer_id}}</td>
+        <td>{{buy.customerName}}</td>
+        <td>{{buy.customerContactNo}}</td>
+        <td>{{buy.totalPrice | number : 2}}</td>
+        <td>{{buy.payment | number : 2}}</td>
+        <td>{{buy.comision | number : 2}}</td>
+        <td>{{buy.customerInfoId}}</td>
+        <td>{{buy.cashBackAmount | number : 2}}</td>
+        <td>{{buy.createdAt | date:'dd-MMM-yyyy'}}</td>
+        <td>{{buy.salesBy.name}}</td>
+        <td><button ng-click="product(buy)" >Product</button></td>
+      </tr>
+
+
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>   
+
+
+</div>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Product List</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+   <thead>
+      <th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </th>
+    </thead>
+    <thead>
+        <th>Name</th>
+        <th>quantity</th>
+        <th>priceIP</th>
+        <th>Total Price </th>
+    </thead>
+    <tbody>
+       <tr ng-repeat="sales in productList">
+        <td>{{sales.product}}</td>
+        <td>{{sales}}</td>
+        <td>{{sales.product.priceIP}}</td>
+        <td>{{2 * 5 }}</td>
+      </tr>
+
+
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+    var app = angular.module("myapp", []);
+    app.controller("accountcontroller", function($scope, $http) {
+        $scope.customerInfo ='';
+        $scope.userInfoSection=true;
+        $scope.userBuyInfoSection=true;
+        $scope.productList=[];
+        $scope.complete = function(string) {
+            if(string && string.length >4 ){
+                getUserInfo(string);
+                getSalesInfo(string)
+            }
+        $scope.userInfoSection=true;
+        $scope.userBuyInfoSection=true;
+        }
+
+        function getUserInfo(userName){
+            $http({
+                method : "GET",
+                url : "/user?userName="+userName
+            }).then(function mySuccess(response) {
+                if(response.data){
+                    $scope.customerInfo =response.data;
+                    $scope.userInfoSection=false;
+                }else{
+                    $scope.customerInfo =response.data;
+                    $scope.userInfoSection=true;
+                }
+            }, function myError(response) {
+                alert("Service Not Working");
+            });
+        };
+
+        $scope.userDetailButton = function() {
+            if($scope.userInfoSection ){
+                $scope.userInfoSection=false;
+            }else{
+                $scope.userInfoSection=true;
+            }
+        }
+
+
+
+        $scope.customerBuy=[];
+
+        function getSalesInfo(userName){
+            $http({
+                method : "GET",
+                url : "/customer/sales?userName="+userName
+            }).then(function mySuccess(response) {
+                if(response.data){
+                    $scope.customerBuy =response.data;
+                    $scope.userBuyInfoSection=false;
+                }else{
+                    $scope.customerBuy =response.data;
+                    $scope.userBuyInfoSection=true;
+                }
+            }, function myError(response) {
+                alert("Service Not Working");
+            });
+        };
+
+
+  
+        $scope.buyings = function() {
+            if($scope.userBuyInfoSection){
+                $scope.userBuyInfoSection=false;
+            }else{
+                $scope.userBuyInfoSection=true;
+            }
+        }
+
+
+
+        $scope.product = function(product) {
+            $scope.productList=product.sales;
+            $("#myModal").modal("show");
+            console.log($scope.productList)
+        }
+
+
+
+    });
+
+
+</script>

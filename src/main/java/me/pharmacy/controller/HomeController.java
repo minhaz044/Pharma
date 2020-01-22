@@ -53,4 +53,10 @@ public class HomeController {
 		mv.setViewName("views/success.html");
 		return mv;
 	}
+	@GetMapping("/userSearch")
+	protected ModelAndView userSearch() {
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("views/userSearch.html");
+		return mv;
+	}
 }
