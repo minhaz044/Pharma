@@ -1,16 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Ashrab Pharmacy</title>
+<title>Ashrab Pharmacy-Home</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+<script src="/static/angular/angular.min.js"></script>
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+<script src="/static/bootstrap/js/jquery-3.4.1.min.js"></script>
+<script type='text/javascript' src='/static/bootstrap/js/bootstrap.min.js'></script>
+<style>
+ul {
+  list-style-type: none;
+}
+li a {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 25px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.3s;
+    cursor: pointer;
+  	height:18px;
+  	width:220px;
+  	background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+li a:hover {
+     background-color: #4CAF50;
+    color: white;
+}
 
-
-
+</style>
 </head>
 <body>
 
@@ -18,15 +48,36 @@
 <div class="container-fluid" >
   <h1>WellCome To Ashraf Pharmacy</h1> 
 	<p>Ashraf Pharmacy Moto</p>
-	<button type="button" id="companyBtn" name="companyBtn" class="btn btn-primary" data-toggle="modal" data-target="#companyModal">Add Comapny</button>
+
+	<div align="center">
+	<ul >
+		<li ><a type="button" id="companyBtn"name="companyBtn"data-toggle="modal" data-target="#companyModal">Add Comapny</a></li>
+    	<li><a type="button" id="companyBtn"name="genericsBtn"  data-toggle="modal" data-target="#genericsModal">Add Generic</a></li>
+	    <li><a type="button" id="companyBtn"name="medicineTypeBtn" data-toggle="modal" data-target="#medicineTypeModal">Add Medicine Type</a></li>
+	    <li><a type="button" id="companyBtn"name="medicineBtn" data-toggle="modal" data-target="#medicineModal">Add Medicine </a></li>
+	    <li><a type="button" id="companyBtn"name="medicineBtn" data-toggle="modal" data-target="#salesPersonModal">Add Sales Person </a></li>
+	    <li><a type="button" id="companyBtn"name="medicineBtn" data-toggle="modal" data-target="#ExpenseModal">Add Expense </a></li>
+	    <li><a href="/create" type="button" id="addCustomerBtn"name="addCustomerBtn" >Add Customer</a></li>
+	    <li><a href="/userSearch" type="button"id="customerSearchBtn"name="customerSearchBtn" >Customer Search</a></li>
+	    <li><a href="/shop" type="button" id="companyBtn"name="medicineBtn" >Enter Into Shop</a></li>
+	    <li><a href="/business" type="button" id="companyBtn"name="medicineBtn" >Business Analysis</a></li>
+	</ul>
+	</div>
+
+
+
+
+<!-- 	<button type="button" id="companyBtn" name="companyBtn" class="btn btn-primary" data-toggle="modal" data-target="#companyModal">Add Comapny</button>
 	<button type="button" id="companyBtn"name="genericsBtn" class="btn btn-primary" data-toggle="modal" data-target="#genericsModal">Add Generic</button>
 	<button type="button" id="companyBtn"name="medicineTypeBtn" class="btn btn-primary" data-toggle="modal" data-target="#medicineTypeModal">Add Medicine Type</button>
 	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#medicineModal">Add Medicine </button>
 	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#salesPersonModal">Add Sales Person </button>
 	<button type="button" id="companyBtn"name="medicineBtn" class="btn btn-primary" data-toggle="modal" data-target="#ExpenseModal">Add Expense </button>
-	
+
+	<a href="/create" class="btn btn-primary" type="button" id="addCustomerBtn"name="addCustomerBtn" >Add Customer</a>
+	<a href="/userSearch" class="btn btn-primary" type="button"id="customerSearchBtn"name="customerSearchBtn" >Customer Search</a>
 	<a href="/shop" class="btn btn-primary" type="button" id="companyBtn"name="medicineBtn" >Enter Into Shop</a>
-	<a href="/business" class="btn btn-primary" type="button" id="companyBtn"name="medicineBtn" >Business Analysis</a>
+	<a href="/business" class="btn btn-primary" type="button" id="companyBtn"name="medicineBtn" >Business Analysis</a> -->
 </div>
 
 

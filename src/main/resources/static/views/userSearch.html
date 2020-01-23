@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Ashrab Pharmacy-Customer Search</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script
-            src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="/static/angular/angular.min.js"></script>
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+<script src="/static/bootstrap/js/jquery-3.4.1.min.js"></script>
+<script type='text/javascript' src='/static/bootstrap/js/bootstrap.min.js'></script>
+
 </head>
 <body>
 <div class="container" ng-app="myapp" ng-controller="accountcontroller">
@@ -55,7 +50,7 @@
         <td>{{customerInfo.userName}}</td>
       </tr>
        <tr>
-        <td>totalAmount</td>
+        <td>CashBackAmount</td>
         <td>{{customerInfo.totalAmount}}</td>
       </tr>
         <tr>
@@ -82,8 +77,8 @@
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
+<!--         <th></th>
+ -->        <th></th>
         <th></th>
         <th></th>
         <th></th>
@@ -96,8 +91,8 @@
         <th>totalPrice</th>
         <th>payment</th>
         <th>comision</th>
-        <th>customerInfoId</th>
-        <th>cashBackAmount</th>
+<!--         <th>customerInfoId</th>
+ -->        <th>cashBackAmount</th>
         <th>createdAt</th>
         <th>salesBy</th>
         <th>Product</th>
@@ -110,8 +105,8 @@
         <td>{{buy.totalPrice | number : 2}}</td>
         <td>{{buy.payment | number : 2}}</td>
         <td>{{buy.comision | number : 2}}</td>
-        <td>{{buy.customerInfoId}}</td>
-        <td>{{buy.cashBackAmount | number : 2}}</td>
+<!--         <td>{{buy.customerInfoId}}</td>
+ -->        <td>{{buy.cashBackAmount | number : 2}}</td>
         <td>{{buy.createdAt | date:'dd-MMM-yyyy'}}</td>
         <td>{{buy.salesBy.name}}</td>
         <td><button ng-click="product(buy)" >Product</button></td>
@@ -135,9 +130,6 @@
 </div>   
 
 
-</div>
-
-
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -157,12 +149,6 @@
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
       </th>
     </thead>
     <thead>
@@ -173,10 +159,10 @@
     </thead>
     <tbody>
        <tr ng-repeat="sales in productList">
-        <td>{{sales.product}}</td>
-        <td>{{sales}}</td>
+        <td>{{sales.product.name}}</td>
+        <td>{{sales.quantity}}</td>
         <td>{{sales.product.priceIP}}</td>
-        <td>{{2 * 5 }}</td>
+        <td>{{sales.quantity * sales.product.priceIP }}</td>
       </tr>
 
 
@@ -197,6 +183,8 @@
     </div>
   </div>
 
+
+</div>
 </body>
 </html>
 
