@@ -43,7 +43,8 @@ public class Customer {
 	@JoinColumn(name = "salesBy")
 	private Person salesBy;
 	private boolean is_delete=false;
-			
+	private double from_cashback;
+
 	@PrePersist
 	protected void onCreate() {
 		createdAt = new Date();

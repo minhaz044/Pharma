@@ -59,17 +59,17 @@ li:hover {
 							<th >#</th>
 							<th >Date</th>
 							<th >Total Sell</th>
-							<th >Total Comision</th>
-							<th >Total Due</th>
+							<th >Total Collection</th>
+							<th >Total CashBack</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="salesSatic in salesSatics" finalOrder>
 							<th scope="row">{{ $index+1	}}</th>
 							<td>{{salesSatic.date | date:'dd-MMM-yyyy'}}</td>
-							<td>{{salesSatic.totalSalesValue}}</td>
-							<td>{{salesSatic.totalComisionValue}}</td>
-							<td>{{salesSatic.totalDueValue}}</td>
+							<td>{{salesSatic.totalSales}}</td>
+							<td>{{salesSatic.totalCollection}}</td>
+							<td>{{salesSatic.totalCashBack}}</td>
 						</tr>
 						<tr>
 							<th scope="col"></th>

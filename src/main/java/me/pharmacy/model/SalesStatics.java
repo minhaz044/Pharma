@@ -21,6 +21,10 @@ public interface SalesStatics {
 	 Double getTotalSalesValue();
 	 Double getTotalComisionValue();
 	 Double getTotalDueValue();
+	Double getTotalSales();
+	Double getTotalCollection();
+	Double getTotalCashBack();
+
 	 Date getDate();
 	 
 	
