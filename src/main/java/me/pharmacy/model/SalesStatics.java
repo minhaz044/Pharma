@@ -24,6 +24,8 @@ public interface SalesStatics {
 	Double getTotalSales();
 	Double getTotalCollection();
 	Double getTotalCashBack();
+	Double getTotalFromCashback();
+
 
 	 Date getDate();
 	 

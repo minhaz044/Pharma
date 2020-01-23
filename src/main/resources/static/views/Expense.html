@@ -114,7 +114,7 @@ li:hover {
 					<td>{{expense.expenseFor}}</td>
 					<td>{{expense.recivePerson}}</td>
 					<td>{{expense.expenseDetail}}</td>
-					<td>{{expense.expenseAmount }} </td>
+					<td>{{expense.expenseAmount | number:2 }} </td>
 					<td>{{ expense.expenseRefInfo }}</td>
 				</tr>
 				<tr>

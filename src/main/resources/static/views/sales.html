@@ -61,15 +61,18 @@ li:hover {
 							<th >Total Sell</th>
 							<th >Total Collection</th>
 							<th >Total CashBack</th>
+							<th >Total CashBack Use</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="salesSatic in salesSatics" finalOrder>
 							<th scope="row">{{ $index+1	}}</th>
 							<td>{{salesSatic.date | date:'dd-MMM-yyyy'}}</td>
-							<td>{{salesSatic.totalSales}}</td>
-							<td>{{salesSatic.totalCollection}}</td>
-							<td>{{salesSatic.totalCashBack}}</td>
+							<td>{{salesSatic.totalSales | number:2}}</td>
+							<td>{{salesSatic.totalCollection | number:2}}</td>
+							<td>{{salesSatic.totalCashBack | number:2}}</td>
+							<td>{{salesSatic.totalFromCashback | number:2}}</td>
+							
 						</tr>
 						<tr>
 							<th scope="col"></th>
@@ -97,8 +100,6 @@ li:hover {
 	if($scope.date_from && $scope.date_to){
 	var date_from =$scope.date_from.getFullYear()+"-"+($scope.date_from.getMonth()+1)+"-"+$scope.date_from.getDate()+" "+"00:00:00"; 
 	var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"23:59:59"; 
-	console.log(date_from);
-	console.log(date_to);
 
 		$http({
 			method : "GET",
