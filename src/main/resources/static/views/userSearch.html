@@ -50,6 +50,10 @@
         <td>{{customerInfo.userName}}</td>
       </tr>
        <tr>
+        <td>Due Amount</td>
+        <td>{{customerInfo.totalDue}}</td>
+      </tr>
+       <tr>
         <td>CashBackAmount</td>
         <td>{{customerInfo.totalAmount}}</td>
       </tr>
@@ -85,28 +89,28 @@
       </th>
     </thead>
     <thead>
-        <th>customer_id</th>
+<!--         <th>customer_id</th>
         <th>customerName</th>
-        <th>customerContactNo</th>
+        <th>customerContactNo</th> -->
         <th>totalPrice</th>
         <th>payment</th>
         <th>comision</th>
-<!--         <th>customerInfoId</th>
- -->        <th>cashBackAmount</th>
+        <th>Due</th>
+        <th>cashBackAmount</th>
         <th>createdAt</th>
         <th>salesBy</th>
         <th>Product</th>
     </thead>
     <tbody>
        <tr ng-repeat="buy in customerBuy">
-        <td>{{buy.customer_id}}</td>
+<!--         <td>{{buy.customer_id}}</td>
         <td>{{buy.customerName}}</td>
-        <td>{{buy.customerContactNo}}</td>
+        <td>{{buy.customerContactNo}}</td> -->
         <td>{{buy.totalPrice | number : 2}}</td>
         <td>{{buy.payment | number : 2}}</td>
         <td>{{buy.comision | number : 2}}</td>
-<!--         <td>{{buy.customerInfoId}}</td>
- -->        <td>{{buy.cashBackAmount | number : 2}}</td>
+         <td>{{buy.dueAmount | number : 2 }}</td>
+         <td>{{buy.cashBackAmount | number : 2}}</td>
         <td>{{buy.createdAt | date:'dd-MMM-yyyy'}}</td>
         <td>{{buy.salesBy.name}}</td>
         <td><button ng-click="product(buy)" >Product</button></td>

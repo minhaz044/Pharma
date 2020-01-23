@@ -123,7 +123,7 @@ li:hover {
       </div>
       <div class="modal-body">
        	<form class="form-horizontal" action="#">
-       		  <div class="form-check">
+<!--        		  <div class="form-check">
 			    <label>
 			    	<input type="checkbox" class="form-check-input" id="cashBack" ng-model="cashBack" ng-change="cashBackCheck()" ng-true-value='true'ng-false-value='false'>
 			    	Add To CashBack Policy. 
@@ -134,7 +134,7 @@ li:hover {
 			    	<input type="checkbox" class="form-check-input" id="cashBackUse" ng-model="cashBackUse" ng-change="cashBackCheckUse()" ng-true-value='true'ng-false-value='false'>
 			    	Use Available CashBack. 
 				</label>
-			  </div>
+			  </div> -->
   			<div class="form-group" ng-hide="hideUserName">
 		    <label class="control-label col-sm-2" for="medicineName">User Name:</label>
 		    <div class="col-sm-10">
@@ -189,14 +189,19 @@ li:hover {
 		      <input type="number" class="form-control" id="genericsName" placeholder="Enter Generics Name"  ng-model="customerPaying">
 		    </div>
 		  </div>
-
+		 <div class="form-group">
+		    <label class="control-label col-sm-2" for="genericsName">Due:</label>
+		    <div class="col-sm-10">
+		      <input type="number" class="form-control" id="customerDue" placeholder="Enter Due Amount"  min=0 ng-model="customerDue" ng-keyup="dueAmount(customerDue)">
+		    </div>
+		  </div>
 		   
-		 	<div class="form-group">
+<!-- 		 	<div class="form-group">
 		    <label class="control-label col-sm-2" for="genericsName">password:</label>
 		    <div class="col-sm-10">
 		      <input type="password" class="form-control" id="customerPass" placeholder="Enter Password"  ng-model="customerPass">
 		    </div>
-		  </div>
+		  </div> -->
 
 		</form>
       </div>
@@ -306,7 +311,7 @@ li:hover {
 		}
 
 		$scope.submitOrder= function() {
-			if($scope.totalAmount >0 && (($scope.cashbackAmount>0 && user && $scope.cashBack && !$scope.customerName && !$scope.customerContactNo) || (!$scope.cashbackAmount && !$scope.cashBack )) ){
+			if($scope.totalAmount >0 && (($scope.cashbackAmount>0 && user && $scope.cashBack && !$scope.customerName && !$scope.customerContactNo) || (!$scope.cashbackAmount && !$scope.cashBack )) && (($scope.customerDue<=0  && !$scope.UserName)||($scope.customerDue>0  && $scope.UserName))){
 			var customer={"customerName":$scope.customerName,
 						  "customerContactNo":$scope.customerContactNo,
 						  "totalPrice":$scope.totalAmount,
@@ -314,6 +319,7 @@ li:hover {
 						  "comision":$scope.comision,
 						  "cashBackAmount":$scope.cashbackAmount,
 						  "customerInfoId":user,
+						  "dueAmount":$scope.customerDue,
 						  "salesBy":{"person_id":1,"name":"Abu Bakkar"}};
 			var orders={"orders":$scope.finalOrder,
 						"customer":customer,
@@ -343,6 +349,7 @@ li:hover {
 					$scope.quantity="";
 					$scope.medicine="";
 					$scope.finalOrder=[];
+					$scope.customerDue=0;
 					  
 				  }, function myError(response) {
 				   alert("Failed to Submit This ORDER");
@@ -356,7 +363,7 @@ li:hover {
 	$scope.cashbackAmount=$scope.medicinePriceWithComision;
 	$scope.cashBack = false;
 	$scope.hideCashbackAmount=true;
-	$scope.hideUserName=true;
+	$scope.hideUserName=false;
     $scope.cashBackCheck = function(data)
     {
     	if($scope.cashBack ){
@@ -419,7 +426,7 @@ li:hover {
 		$scope.userList = output;
 	}
 
-
+	
 		
 		
 	});

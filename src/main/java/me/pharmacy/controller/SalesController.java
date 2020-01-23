@@ -46,9 +46,13 @@ public class SalesController {
 								double amount1=(double)(CustomerInfo.get().getTotalAmount()==null?0:CustomerInfo.get().getTotalAmount());
 								double amount2=customer.getCashBackAmount();
 								CustomerInfo.get().setTotalAmount(amount1+amount2);
+								amount1=(double)(CustomerInfo.get().getTotalDue()==null?0:CustomerInfo.get().getTotalDue());
+								amount2=customer.getDueAmount();
+								CustomerInfo.get().setTotalDue(amount1+amount2);
 								customerInfoService.saveCustomerInfo(CustomerInfo.get());
 							}
 						}
+						
 						return order;
 					}
 				}

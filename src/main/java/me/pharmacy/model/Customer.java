@@ -38,6 +38,7 @@ public class Customer {
 	private double comision;
 	private int customerInfoId;
 	private double cashBackAmount;
+	private double dueAmount;
 	private Date createdAt;
 	@ManyToOne
 	@JoinColumn(name = "salesBy")

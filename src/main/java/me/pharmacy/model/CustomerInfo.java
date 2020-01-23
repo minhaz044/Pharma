@@ -28,6 +28,8 @@ public class CustomerInfo {
     private String userName;
     private String password;
     private Double totalAmount;
+    private Double totalDue;
+    private Double totalDuePaid;
     private Double totalUses;
     private Date createdAt;
     private boolean is_delete=false;
