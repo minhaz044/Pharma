@@ -16,14 +16,24 @@
     <h2>Add New Customer</h2>
     <form action="/create" method="POST">
         <div class="form-group">
-            <label for="contact">Email/Phone</label>
+            <label for="contact">Full Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>
+        </div>
+        <div class="form-group">
+            <label for="contact">Email/Phone Number</label>
             <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter email/phone" required>
         </div>
         <div class="form-group">
-            <label for="userName">User Name</label>
+            <label for="userName">User Name(4 Char Long & Unique)</label>
             <input type="text" minlength="5" class="form-control" id="userName" name="userName" ng-model="userName" ng-keyup="complete(userName)">
-            <small id="warning" class="form-text text-muted text-danger" ng-model="hidethis" ng-hide="hidethis">userName already used.</small>
+            <small id="warning" class="form-text text-muted text-danger" ng-model="hidethis" ng-hide="hidethis">userName already Taken.</small>
         </div>
+        <div class="form-group">
+            <label for="userName">Address:</label>
+             <textarea rows="4" cols="50" class="form-control" id="address" name="address" ng-model="address" required>
+            </textarea> 
+        </div>
+
         <button type="submit" id="adduserbtn" name="adduserbtn" ng-model="adduserbtn" ng-hide="adduserbtn" class="btn btn-primary">Add User</button>
     </form>
 

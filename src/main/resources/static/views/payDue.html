@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ashrab Pharmacy-Collect Due</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/static/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script type='text/javascript' src='/static/bootstrap/js/bootstrap.min.js'></script>
+
+</head>
+<body>
+<div class="container" ng-app="myapp" ng-controller="accountcontroller" >
+    <h2>Collect Due:</h2>
+    <form action="/payDue" method="POST" modelAttribute="duePayHistry">
+    <div class="form-group" >
+        <label for="name">User Name:</label>
+        <input type="text" name="name" ng-model="name"
+               ng-keyup="searchUserName(name)" class="form-control" />
+        <ul class="list-group" ng-model="userNameSugList" ng-hide="hideUserNameSugList">
+            <li class="list-group-item"
+                ng-repeat=" user in userList"
+                ng-click="fillUserNamebox(user)">{{user.userName}}({{ user.contact}})</li>
+        </ul>
+        <small id="warning" class="form-text text-muted text-danger" ng-model="dueAmountShow" >Due Anount:{{dueAmountShow}}</small>
+        <input type="hidden" name="userId" id="userId" ng-model="userId"  value="{{customerInfoId.customerInfoId}}">
+    </div>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="number" min=0 class="form-control" id="amount" name="amount" ng-model="amount" required>
+     
+        </div>
+
+
+
+    <button type="submit" id="payDuebtn" name="payDuebtn" ng-model="payDuebtn" ng-show="hidePayDuebtn" ng-hide="hidePayDuebtn" class="btn btn-primary" ng-click="submit($event)">Pay Due</button>
+
+</form>
+
+
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+    var app = angular.module("myapp", []);
+    app.controller("accountcontroller", function($scope, $http) {
+        $scope.customerInfo ='';
+        $scope.userInfoSection=true;
+        $scope.userBuyInfoSection=true;
+        $scope.hidePayDuebtn=true;
+        $scope.productList=[];
+        var user;
+        function loadUserName(){
+            $http({
+                method : "GET",
+                url : "/users"
+            }).then(function mySuccess(response) {
+                $scope.userFullList = response.data;
+            }, function myError(response) {
+                alert("Failed To Load User");
+            });
+        };
+        loadUserName();
+
+
+        $scope.fillUserNamebox = function(data) {
+            console.log(data)
+            $scope.customerInfoId = data;
+            $scope.name = data.userName;
+            
+            $scope.hideUserNameSugList = true;
+            $scope.hidePayDuebtn=false;
+            $scope.dueAmountShow=data.totalDue;
+            user=data;
+        }
+
+
+        $scope.searchUserName = function(name) {
+            //alert($scope.medicineList[0])
+            $scope.hideUserNameSugList = false;
+             $scope.hidePayDuebtn=true;
+            $scope.customerInfoId ='';
+            $scope.dueAmountShow=0;
+            if(!name){  $scope.hideUserNameSugList =true; }
+            var output = [];
+            angular.forEach($scope.userFullList, function(user) {
+                if(user.userName){
+                    if (user.userName.toLowerCase().indexOf(name.toLowerCase()) >= 0) {
+                        output.push(user);
+                    }
+                }
+            });
+            $scope.userList = output;
+        }
+
+        $scope.submit = function(event) {
+            console.log($scope.customerInfoId);
+            if($scope.customerInfoId){
+                if($scope.customerInfoId.totalDue<=0){
+                alert('No Due For This User.');
+                event.preventDefault();
+                }
+                if($scope.customerInfoId.totalDue< $scope.amount){
+                alert('Amount Must Be less then Due');
+                event.preventDefault();
+                }
+                console.log($scope.customerInfoId);
+            }else{
+                alert('No User Selected.');
+                event.preventDefault();
+            }
+        }
+
+
+    });
+
+
+</script>

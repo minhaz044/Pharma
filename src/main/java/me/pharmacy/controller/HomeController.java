@@ -59,4 +59,11 @@ public class HomeController {
 		mv.setViewName("views/userSearch.html");
 		return mv;
 	}
+
+	@GetMapping("/payDue")
+	protected ModelAndView addDuePay() {
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("views/payDue.html");
+		return mv;
+	}
 }

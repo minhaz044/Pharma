@@ -15,7 +15,13 @@
     <h2>Customer Search</h2>
         <div class="form-group">
             <label for="userName">User Name</label>
-            <input type="text" minlength="5" class="form-control" id="userName" name="userName" ng-model="userName">
+                    <input type="text" name="userName" id="userName" ng-model="userName"
+            ng-keyup="searchUserName(userName)" class="form-control" />
+          <ul class="list-group" ng-model="userNameSugList" ng-hide="hideUserNameSugList">
+            <li class="list-group-item"
+              ng-repeat=" user in userList"
+              ng-click="fillUserNamebox(user)">{{user.userName}}({{ user.contact}})</li>
+          </ul>
         </div>
         <button type="submit" id="searchbtn" name="searchbtn" ng-model="searchbtn" ng-click=complete(userName)  class="btn btn-primary">Search</button>
 </br><button ng-click=userDetailButton()>User Detail Info</button>
@@ -29,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr> 
+      <tr>
         <td>customerInfoId</td>
         <td>{{customerInfo.customerInfoId}}</td>
       </tr>
@@ -133,6 +139,41 @@
   </table>
 </div>   
 
+</br><button ng-click="duepay()">Due Pay Histry</button>
+<div ng-model="userduePayHistrySection" ng-hide="userduePayHistrySection" ng-show="userduePayHistrySection">
+
+<table class="table">
+   <thead>
+      <th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </th>
+    </thead>
+    <thead>
+        <th>Amount</th>
+        <th>Remaining Amount</th>
+        <th>Customer</th>
+        <th>Pay Time</th>
+    </thead>
+    <tbody>
+       <tr ng-repeat="due in customerduePayHistry">
+        <td>{{due.amount | number : 2}}</td>
+        <td>{{due.remainingAmount | number : 2}}</td>
+        <td>{{due.customerInfoId.name }}</td>
+        <td>{{due.createdAt | date:'dd-MMM-yyyy HH:mm'}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>   
 
 
   <!-- Modal -->
@@ -199,10 +240,47 @@
         $scope.userInfoSection=true;
         $scope.userBuyInfoSection=true;
         $scope.productList=[];
+      function loadUserName(){
+        $http({
+          method : "GET",
+          url : "/users"
+          }).then(function mySuccess(response) {
+          $scope.userFullList = response.data;
+        }, function myError(response) {
+        alert("Failed To Load User");
+        });
+    };
+      loadUserName();
+
+
+    $scope.fillUserNamebox = function(data) {
+        $scope.userName = data.userName;
+        $scope.hideUserNameSugList = true;
+         $scope.complete(data.userName);
+    }
+
+
+  $scope.searchUserName = function(name) {
+      //alert($scope.medicineList[0])
+    $scope.hideUserNameSugList = false;
+    if(!name){  $scope.hideUserNameSugList =true; }
+    var output = [];
+    angular.forEach($scope.userFullList, function(user) {
+      if(user.userName){
+        if (user.userName.toLowerCase().indexOf(name.toLowerCase()) >= 0) {
+          output.push(user);
+        }
+      } 
+    });
+    $scope.userList = output;
+  }
+
+
         $scope.complete = function(string) {
             if(string && string.length >4 ){
                 getUserInfo(string);
-                getSalesInfo(string)
+                getSalesInfo(string);
+                getDueHistry(string);
             }
         $scope.userInfoSection=true;
         $scope.userBuyInfoSection=true;
@@ -269,9 +347,33 @@
         $scope.product = function(product) {
             $scope.productList=product.sales;
             $("#myModal").modal("show");
-            console.log($scope.productList)
         }
+        $scope.customerduePayHistry=[];
+        function getDueHistry(userName){
+            $http({
+                method : "GET",
+                url : "/customer/dueHistry?userName="+userName
+            }).then(function mySuccess(response) {
+                if(response.data){
+                  console.log(response.data);
+                    $scope.customerduePayHistry =response.data;
+                    $scope.userduePayHistrySection=false;
+                }else{
+                    $scope.customerduePayHistry =response.data;
+                    $scope.userduePayHistrySection=true;
+                }
+            }, function myError(response) {
+                alert("Service Not Working");
+            });
+        };
 
+        $scope.duepay= function() {
+            if($scope.userduePayHistrySection){
+                $scope.userduePayHistrySection=false;
+            }else{
+                $scope.userduePayHistrySection=true;
+            }
+        }
 
 
     });

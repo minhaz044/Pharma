@@ -2,8 +2,10 @@ package me.pharmacy.controller;
 
 import me.pharmacy.model.Customer;
 import me.pharmacy.model.CustomerInfo;
+import me.pharmacy.model.DuePayHistry;
 import me.pharmacy.services.CustomerInfoService;
 import me.pharmacy.services.CustomerService;
+import me.pharmacy.services.DuePayHistryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,8 @@ public class CustomerController {
     private CustomerService customerService;
     @Autowired
     private CustomerInfoService customerInfoService;
-
+    @Autowired
+    private DuePayHistryService duePayHistryService;
     @GetMapping("/customer/sales")
     public List<Customer> getUserSales(@RequestParam("userName") String userName){
         return customerService.getCustomerByUserName(userName);
@@ -32,6 +35,14 @@ public class CustomerController {
         Optional<CustomerInfo> userInfo=customerInfoService.getCustomerInfo(userName);
         if(userInfo.isPresent()){
             return customerInfoService.getCustomerInfo(userName).get();
+        }
+        return null;
+    }
+    @GetMapping("/customer/dueHistry")
+    public List<DuePayHistry> getDueHistry(@RequestParam("userName") String userName){
+        Optional<CustomerInfo> userInfo=customerInfoService.getCustomerInfo(userName);
+        if(userInfo.isPresent()){
+            return duePayHistryService.getDuePayHistry(userInfo.get().getCustomerInfoId());
         }
         return null;
     }
