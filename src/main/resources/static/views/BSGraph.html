@@ -154,6 +154,9 @@
             expenseBarChartLevel=[];
             expenseBarChartExpData=[];
             expenseBarChartSalesData=[];
+            if(mychart){
+                mychart.destroy();
+            }
             if(expenseList){
                 for (i = 0; i < expenseList.length; i++) {
                     expenseBarChartExpData.push(expenseList[i].totalExpenseAmount + 0);
