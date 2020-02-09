@@ -23,7 +23,7 @@ li:hover {
 		<!-- ---------------- -->
 		<div class="container-fluid">
 			<h1>ASHRAB PHARMACY</h1>
-			<p>Ashrab Pharmacy Moto</p> 
+			<p>Ashrab Pharmacy Moto</p>
 			<div class="form-row">
 				<div class="form-group col-md-2">
 					<p>
@@ -206,7 +206,7 @@ li:hover {
                 method : "GET",
                 url : "/business/date"+"?"+"from="+date_from+"&to="+date_to
             }).then(function mySuccess(response) {
-                console.log(response.data);
+
                 buildExpSellesGroupChart($scope.expenseSatics, response.data);
             }, function myError(response) {
                 $scope.myWelcome = response.statusText;
@@ -215,6 +215,9 @@ li:hover {
     };
 
     function buildExpSellesGroupChart(expenseList,salesList){
+        expenseBarChartLevel=[];
+        expenseBarChartExpData=[];
+        expenseBarChartSalesData=[];
         if(expenseList){
             for (i = 0; i < expenseList.length; i++) {
                 expenseBarChartExpData.push(expenseList[i].totalExpenseAmount+0);
@@ -222,8 +225,7 @@ li:hover {
                 expenseBarChartLevel.push(dt);
             }
         }
-        console.log("Console");
-        console.log(salesList);
+
         if(salesList){
             for (i = 0; i < salesList.length; i++) {
                 expenseBarChartSalesData.push(salesList[i].totalSales)

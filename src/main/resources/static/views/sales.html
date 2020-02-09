@@ -119,7 +119,7 @@ li:hover {
 			url : "/business/date"+"?"+"from="+date_from+"&to="+date_to
 			}).then(function mySuccess(response) {
 				$scope.salesSatics = response.data;
-				console.log(response.data);
+
             	buildExpSellesGroupChart(null,response.data);
 			}, function myError(response) {
 			$scope.myWelcome = response.statusText;
@@ -141,6 +141,9 @@ li:hover {
 
 
         function buildExpSellesGroupChart(expenseList,salesList){
+            expenseBarChartLevel=[];
+            expenseBarChartExpData=[];
+            expenseBarChartSalesData=[];
             if(expenseList){
                 for (i = 0; i < expenseList.length; i++) {
                     expenseBarChartExpData.push(expenseList[i].totalExpenseAmount+0);
@@ -148,8 +151,7 @@ li:hover {
                     //expenseBarChartLevel.push(dt);
                 }
             }
-            console.log("Console");
-            console.log(salesList);
+
             if(salesList){
                 for (i = 0; i < salesList.length; i++) {
                     expenseBarChartSalesData.push(salesList[i].totalSales);

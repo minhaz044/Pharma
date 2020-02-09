@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Ashrab Pharmacy-Expense</title>
-    <script src="/static/angular/angular.min.js"></script>
+    <script src="/static/angular/angular.min.js" ></script>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <script src="/static/bootstrap/js/jquery-3.4.1.min.js"></script>
     <script type='text/javascript' src='/static/bootstrap/js/bootstrap.min.js'></script>
@@ -22,8 +22,8 @@
 <div ng-app="myapp" ng-controller="usercontroller">
     <!-- ---------------- -->
     <div class="container-fluid">
-   			<h1>ASHRAB PHARMACY</h1>
-            <p>Ashrab Pharmacy Moto</p>
+   			<!--<h1>ASHRAB PHARMACY</h1>-->
+            <!--<p>Ashrab Pharmacy Moto</p>-->
         <div class="form-row">
             <div class="form-group col-md-2">
                 <p>
@@ -35,6 +35,15 @@
                     <b>Date (to):</b>
                 </p>
                 <input type="date" name="bdaytime"  ng-model="date_to">
+            </div>
+            <div class="form-group col-md-2">
+                <p>
+                    <b>Graph Type:</b>
+                </p>
+                <select class="form-control" id="exampleFormControlSelect1" ng-model="chartType">
+                    <option>bar</option>
+                    <option>line</option>
+                </select>
             </div>
             <div class="form-group col-md-2">
                 <p>
@@ -60,6 +69,7 @@
 
             </div>
         </div>
+
         <!--------------------End Of Chart---------------------------->
 
 
@@ -86,6 +96,7 @@
                     url : "/expense/date"+"?"+"from="+date_from+"&to="+date_to
                 }).then(function mySuccess(response) {
                     $scope.expenseSatics = response.data;
+
                     getSalesList(date_from,date_to);
                 }, function myError(response) {
                     alert("Search Failed");
@@ -122,14 +133,16 @@
         var expenseBarChartLevel=[];
         var expenseBarChartExpData=[];
         var expenseBarChartSalesData=[];
-
+        var chartTypeFinal="line";
+        var mychart=null;
         function getSalesList(date_from,date_to){
+
             if(date_from && date_to){
                 $http({
                     method : "GET",
                     url : "/business/date"+"?"+"from="+date_from+"&to="+date_to
                 }).then(function mySuccess(response) {
-                    console.log(response.data);
+
                     buildExpSellesGroupChart($scope.expenseSatics, response.data);
                 }, function myError(response) {
                     $scope.myWelcome = response.statusText;
@@ -138,23 +151,25 @@
         };
 
         function buildExpSellesGroupChart(expenseList,salesList){
+            expenseBarChartLevel=[];
+            expenseBarChartExpData=[];
+            expenseBarChartSalesData=[];
             if(expenseList){
                 for (i = 0; i < expenseList.length; i++) {
-                    expenseBarChartExpData.push(expenseList[i].totalExpenseAmount + 500);
+                    expenseBarChartExpData.push(expenseList[i].totalExpenseAmount + 0);
                     var dt =new Date(expenseList[i].date).getDate()+"/"+new Date(expenseList[i].date).getMonth()+"/"+new Date(expenseList[i].date). getFullYear();
                     expenseBarChartLevel.push(dt);
                 }
             }
-            console.log("Console");
-            console.log(salesList);
+
             if(salesList){
                 for (i = 0; i < salesList.length; i++) {
                     expenseBarChartSalesData.push(salesList[i].totalSales)
                 }
             }
 
-            new Chart(document.getElementById("bar-chart-grouped"), {
-                type: 'bar',
+             mychart=new Chart(document.getElementById("bar-chart-grouped").getContext("2d"), {
+                type:$scope.chartType,
                 data: {
                     labels: expenseBarChartLevel ,
                     datasets:  [
@@ -177,6 +192,7 @@
                     }
                 }
             });
+
         }
 
 
