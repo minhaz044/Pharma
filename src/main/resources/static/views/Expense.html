@@ -6,7 +6,8 @@
 <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
 <script src="/static/bootstrap/js/jquery-3.4.1.min.js"></script>
 <script type='text/javascript' src='/static/bootstrap/js/bootstrap.min.js'></script>
- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
 <style>
 li {
 	cursor: pointer;
@@ -26,8 +27,7 @@ li:hover {
 			<div class="form-row">
 				<div class="form-group col-md-2">
 					<p>
-
-						<b>Date (From):</b					</p>
+						<b>Date (From):</b>				</p>
 					<input type="date" name="bdaytime"  ng-model="date_from">
 				</div>
 				<div class="form-group col-md-2">
@@ -48,9 +48,21 @@ li:hover {
 			</br>
 			</br>
 
+<!------------------Expense In BarChart -------------------->
+			<div class="container">
+				<div class="row">
 
+						<div class="card">
+							<div class="card-body">
+								<canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+							</div>
+						</div>
 
-<!-- --------Expense List--------- -->
+				</div>
+			</div>
+<!--------------------End Of Chart---------------------------->
+
+			<!-- --------Expense List--------- -->
 			<div>
 				<table class="table table-hover">
 					<thead>
@@ -154,7 +166,8 @@ li:hover {
 			url : "/expense/date"+"?"+"from="+date_from+"&to="+date_to
 			}).then(function mySuccess(response) {
 				$scope.expenseSatics = response.data;
-			}, function myError(response) {
+            	getSalesList(date_from,date_to);
+        }, function myError(response) {
 				alert("Search Failed");
 			$scope.myWelcome = response.statusText;
 			});
@@ -179,9 +192,69 @@ li:hover {
 			$scope.myWelcome = response.statusText;
 			});
 		}
-	  }; 
-		
-	});
+	  };
+
+
+
+    var expenseBarChartLevel=[];
+    var expenseBarChartExpData=[];
+    var expenseBarChartSalesData=[];
+
+    function getSalesList(date_from,date_to){
+        if(date_from && date_to){
+            $http({
+                method : "GET",
+                url : "/business/date"+"?"+"from="+date_from+"&to="+date_to
+            }).then(function mySuccess(response) {
+                console.log(response.data);
+                buildExpSellesGroupChart($scope.expenseSatics, response.data);
+            }, function myError(response) {
+                $scope.myWelcome = response.statusText;
+            });
+        }
+    };
+
+    function buildExpSellesGroupChart(expenseList,salesList){
+        if(expenseList){
+            for (i = 0; i < expenseList.length; i++) {
+                expenseBarChartExpData.push(expenseList[i].totalExpenseAmount+0);
+                var dt =new Date(expenseList[i].date).getDate()+"/"+new Date(expenseList[i].date).getMonth()+"/"+new Date(expenseList[i].date). getFullYear();
+                expenseBarChartLevel.push(dt);
+            }
+        }
+        console.log("Console");
+        console.log(salesList);
+        if(salesList){
+            for (i = 0; i < salesList.length; i++) {
+                expenseBarChartSalesData.push(salesList[i].totalSales)
+            }
+        }
+
+        new Chart(document.getElementById("bar-chart-grouped"), {
+            type: 'bar',
+            data: {
+                labels: expenseBarChartLevel ,
+                datasets:  [
+                    {
+                        label: "Expense",
+                        backgroundColor: "#3e95cd",
+                        data: expenseBarChartExpData
+                    }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Expense Statics'
+                }
+            }
+        });
+    }
+
+
+
+
+    });
 </script>
 
 

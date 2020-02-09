@@ -66,4 +66,10 @@ public class HomeController {
 		mv.setViewName("views/payDue.html");
 		return mv;
 	}
+
+	@GetMapping("/businessGP") public ModelAndView BusinessInGrapn() {
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("views/BSGraph.html");
+		return mv;
+	}
 }

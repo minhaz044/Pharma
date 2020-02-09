@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
 <script src="/static/bootstrap/js/jquery-3.4.1.min.js"></script>
 <script type='text/javascript' src='/static/bootstrap/js/bootstrap.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
 <style>
 li {
@@ -50,7 +51,19 @@ li:hover {
 			</br>
 
 
+			<!------------------Sales In BarChart -------------------->
+			<div class="container">
+				<div class="row">
 
+					<div class="card">
+						<div class="card-body">
+							<canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!--------------------End Of Chart---------------------------->
 <!-- --------Medicine List--------- -->
 			<div>
 				<table class="table table-hover">
@@ -107,6 +120,7 @@ li:hover {
 			}).then(function mySuccess(response) {
 				$scope.salesSatics = response.data;
 				console.log(response.data);
+            	buildExpSellesGroupChart(null,response.data);
 			}, function myError(response) {
 			$scope.myWelcome = response.statusText;
 			});
@@ -116,5 +130,66 @@ li:hover {
 		
 
 	/*	$("#salesPersonModal").modal("show");*/
-	});
+
+
+        var expenseBarChartLevel=[];
+        var expenseBarChartExpData=[];
+        var expenseBarChartSalesData=[];
+
+
+
+
+
+        function buildExpSellesGroupChart(expenseList,salesList){
+            if(expenseList){
+                for (i = 0; i < expenseList.length; i++) {
+                    expenseBarChartExpData.push(expenseList[i].totalExpenseAmount+0);
+                    //var dt =new Date(expenseList[i].date).getDate()+"/"+new Date(expenseList[i].date).getMonth()+"/"+new Date(expenseList[i].date). getFullYear();
+                    //expenseBarChartLevel.push(dt);
+                }
+            }
+            console.log("Console");
+            console.log(salesList);
+            if(salesList){
+                for (i = 0; i < salesList.length; i++) {
+                    expenseBarChartSalesData.push(salesList[i].totalSales);
+                    var dt =new Date(salesList[i].date).getDate()+"/"+new Date(salesList[i].date).getMonth()+"/"+new Date(salesList[i].date). getFullYear();
+                    expenseBarChartLevel.push(dt);
+                }
+            }
+            new Chart(document.getElementById("bar-chart-grouped"), {
+                type: 'bar',
+                data: {
+                    labels: expenseBarChartLevel ,
+                    datasets:  [
+                        {
+                            label: "Sales",
+                            backgroundColor: "#3e95cd",
+                            data: expenseBarChartSalesData
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'SaLES Statics'
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    });
 </script>

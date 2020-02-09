@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ashrab Pharmacy-Expense</title>
+    <script src="/static/angular/angular.min.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script type='text/javascript' src='/static/bootstrap/js/bootstrap.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <style>
+        li {
+            cursor: pointer;
+        }
+
+        li:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<div ng-app="myapp" ng-controller="usercontroller">
+    <!-- ---------------- -->
+    <div class="container-fluid">
+   			<h1>ASHRAB PHARMACY</h1>
+            <p>Ashrab Pharmacy Moto</p>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <p>
+                    <b>Date (From):</b>				</p>
+                <input type="date" name="bdaytime"  ng-model="date_from">
+            </div>
+            <div class="form-group col-md-2">
+                <p>
+                    <b>Date (to):</b>
+                </p>
+                <input type="date" name="bdaytime"  ng-model="date_to">
+            </div>
+            <div class="form-group col-md-2">
+                <p>
+                    <b>Search:</b>
+                </p>
+                <button type="button" id="companyBtn" name="medicineBtn"
+                        class="btn btn-success"  ng-click="onClickExpenseSearchBtnSubmit()">Search</button>
+            </div>
+
+        </div>
+        </br>
+        </br>
+
+        <!------------------Expense In BarChart -------------------->
+        <div class="container">
+            <div class="row">
+
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--------------------End Of Chart---------------------------->
+
+
+        <!-- --------+++++++++++++++++--------- -->
+
+    </div>
+
+
+
+
+</div>
+</body>
+</html>
+<script>
+    var app = angular.module("myapp", []);
+    app.controller("usercontroller", function($scope, $http) {
+        $scope.onClickExpenseSearchBtnSubmit=function(){
+
+            if($scope.date_from && $scope.date_to){
+                var date_from =$scope.date_from.getFullYear()+"-"+($scope.date_from.getMonth()+1)+"-"+$scope.date_from.getDate()+" "+"00:00:00";
+                var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"23:59:59";
+                $http({
+                    method : "GET",
+                    url : "/expense/date"+"?"+"from="+date_from+"&to="+date_to
+                }).then(function mySuccess(response) {
+                    $scope.expenseSatics = response.data;
+                    getSalesList(date_from,date_to);
+                }, function myError(response) {
+                    alert("Search Failed");
+                    $scope.myWelcome = response.statusText;
+                });
+            }
+
+        };
+
+        $scope.onClickExpenseDetailBtnSubmit=function(detailId){
+            if(detailId){
+                detailId=new Date(detailId);
+                var date_from =detailId.getFullYear()+"-"+(detailId.getMonth()+1)+"-"+detailId.getDate()+" "+"00:00:00";
+                var date_to =detailId.getFullYear()+"-"+(detailId.getMonth()+1)+"-"+detailId.getDate()+" "+"23:59:59";
+                $http({
+                    method : "GET",
+                    url : "/expense/date/all"+"?"+"from="+date_from+"&to="+date_to
+                }).then(function mySuccess(response) {
+                    $("#salesPersonModal").modal("show");
+                    $scope.expenseList = response.data;
+                }, function myError(response) {
+                    alert("Search Failed");
+                    expenseList=[];
+                    $scope.myWelcome = response.statusText;
+                });
+            }
+        };
+
+
+
+
+
+
+        var expenseBarChartLevel=[];
+        var expenseBarChartExpData=[];
+        var expenseBarChartSalesData=[];
+
+        function getSalesList(date_from,date_to){
+            if(date_from && date_to){
+                $http({
+                    method : "GET",
+                    url : "/business/date"+"?"+"from="+date_from+"&to="+date_to
+                }).then(function mySuccess(response) {
+                    console.log(response.data);
+                    buildExpSellesGroupChart($scope.expenseSatics, response.data);
+                }, function myError(response) {
+                    $scope.myWelcome = response.statusText;
+                });
+            }
+        };
+
+        function buildExpSellesGroupChart(expenseList,salesList){
+            if(expenseList){
+                for (i = 0; i < expenseList.length; i++) {
+                    expenseBarChartExpData.push(expenseList[i].totalExpenseAmount + 500);
+                    var dt =new Date(expenseList[i].date).getDate()+"/"+new Date(expenseList[i].date).getMonth()+"/"+new Date(expenseList[i].date). getFullYear();
+                    expenseBarChartLevel.push(dt);
+                }
+            }
+            console.log("Console");
+            console.log(salesList);
+            if(salesList){
+                for (i = 0; i < salesList.length; i++) {
+                    expenseBarChartSalesData.push(salesList[i].totalSales)
+                }
+            }
+
+            new Chart(document.getElementById("bar-chart-grouped"), {
+                type: 'bar',
+                data: {
+                    labels: expenseBarChartLevel ,
+                    datasets:  [
+                        {
+                            label: "Expense",
+                            backgroundColor: "#ff0000",
+                            data: expenseBarChartExpData
+                        },
+                        {
+                            label: "Sales",
+                            backgroundColor: "#3e95cd",
+                            data: expenseBarChartSalesData
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Expense & Sales Statics'
+                    }
+                }
+            });
+        }
+
+
+
+
+    });
+</script>
+
+
+
