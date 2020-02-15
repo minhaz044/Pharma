@@ -57,7 +57,7 @@
       </tr>
        <tr>
         <td>Due Amount</td>
-        <td>{{customerInfo.totalDue}}</td>
+        <td><span class="text-danger font-weight-bold"> {{customerInfo.totalDue}} </span></td>
       </tr>
        <tr>
         <td>CashBackAmount</td>
@@ -115,7 +115,7 @@
         <td>{{buy.totalPrice | number : 2}}</td>
         <td>{{buy.payment | number : 2}}</td>
         <td>{{buy.comision | number : 2}}</td>
-         <td>{{buy.dueAmount | number : 2 }}</td>
+         <td><span class="text-danger">{{buy.dueAmount | number : 2 }}</span></td>
          <td>{{buy.cashBackAmount | number : 2}}</td>
         <td>{{buy.createdAt | date:'dd-MMM-yyyy'}}</td>
         <td>{{buy.salesBy.name}}</td>
@@ -205,9 +205,9 @@
     <tbody>
        <tr ng-repeat="sales in productList">
         <td>{{sales.product.name}}</td>
-        <td>{{sales.quantity}}</td>
-        <td>{{sales.product.priceIP}}</td>
-        <td>{{sales.quantity * sales.product.priceIP }}</td>
+        <td>{{sales.quantity  | number : 2}}</td>
+        <td>{{sales.product.priceIP | number : 2}}</td>
+        <td>{{sales.quantity * sales.product.priceIP  | number : 2}}</td>
       </tr>
 
 

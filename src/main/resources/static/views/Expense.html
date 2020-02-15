@@ -86,7 +86,7 @@ li:hover {
 						<tr>
 							<th scope="col"></th>
 							<th scope="col"></th>
-							<th scope="col" ng-model="totalAmount">Total (TK):&nbsp  {{totalAmount}}</th>
+							<th scope="col" ng-model="totalAmountBtwDate">Total (TK):&nbsp  {{totalAmountBtwDate}}</th>
 							<th scope="col" ng-model="totalAmount"></th>
 						</tr>
 					</tbody>
@@ -157,7 +157,7 @@ li:hover {
 	var app = angular.module("myapp", []);
 	app.controller("usercontroller", function($scope, $http) {
 	$scope.onClickExpenseSearchBtnSubmit=function(){
-
+	    $scope.totalAmountBtwDate=0.0;
 	if($scope.date_from && $scope.date_to){
 	var date_from =$scope.date_from.getFullYear()+"-"+($scope.date_from.getMonth()+1)+"-"+$scope.date_from.getDate()+" "+"00:00:00"; 
 	var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"23:59:59"; 
@@ -199,7 +199,7 @@ li:hover {
     var expenseBarChartLevel=[];
     var expenseBarChartExpData=[];
     var expenseBarChartSalesData=[];
-
+	var mychart;
     function getSalesList(date_from,date_to){
         if(date_from && date_to){
             $http({
@@ -218,8 +218,12 @@ li:hover {
         expenseBarChartLevel=[];
         expenseBarChartExpData=[];
         expenseBarChartSalesData=[];
+        if(mychart){
+            mychart.destroy();
+        }
         if(expenseList){
             for (i = 0; i < expenseList.length; i++) {
+            	$scope.totalAmountBtwDate+=(expenseList[i].totalExpenseAmount+0);
                 expenseBarChartExpData.push(expenseList[i].totalExpenseAmount+0);
                 var dt =new Date(expenseList[i].date).getDate()+"/"+new Date(expenseList[i].date).getMonth()+"/"+new Date(expenseList[i].date). getFullYear();
                 expenseBarChartLevel.push(dt);
@@ -232,7 +236,7 @@ li:hover {
             }
         }
 
-        new Chart(document.getElementById("bar-chart-grouped"), {
+        mychart=new Chart(document.getElementById("bar-chart-grouped"), {
             type: 'bar',
             data: {
                 labels: expenseBarChartLevel ,

@@ -38,7 +38,8 @@ li:hover {
 					</p>
 					<input type="date" name="bdaytime"  ng-model="date_to">
 				</div>
-								<div class="form-group col-md-2">
+	
+				<div class="form-group col-md-2">
 					<p>
 						<b>Search:</b>
 					</p>
@@ -71,10 +72,10 @@ li:hover {
 						<tr>
 							<th >#</th>
 							<th >Date</th>
-							<th >Total Sell</th>
-							<th >Total Collection</th>
-							<th >Total CashBack</th>
-							<th >Total CashBack Use</th>
+							<th >Sales</th>
+							<th > Collection</th>
+							<th > CashBack</th>
+							<th > CashBack Use</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -90,8 +91,8 @@ li:hover {
 						<tr>
 							<th scope="col"></th>
 							<th scope="col"></th>
-							<th scope="col"></th>
-							<th scope="col" ng-model="totalAmount">Total Due(TK):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  {{totalAmount}}</th>
+							<th scope="col" ng-model="totalSalesBtwDatw">Total Sales(TK):&nbsp&nbsp  {{totalSalesBtwDatw}}</th>
+							<th scope="col" ng-model="totalCashCollectionBtwDatw">Total Collection(TK):&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  {{totalCashCollectionBtwDatw}}</th>
 							<th scope="col" ng-model="totalAmount"></th>
 						</tr>
 					</tbody>
@@ -110,6 +111,8 @@ li:hover {
 	var app = angular.module("myapp", []);
 	app.controller("usercontroller", function($scope, $http) {
 	$scope.onClickCompanyBtnSubmit=function(){
+		$scope.totalCashCollectionBtwDatw=0.0;
+		$scope.totalSalesBtwDatw=0.0;
 	if($scope.date_from && $scope.date_to){
 	var date_from =$scope.date_from.getFullYear()+"-"+($scope.date_from.getMonth()+1)+"-"+$scope.date_from.getDate()+" "+"00:00:00"; 
 	var date_to =$scope.date_to.getFullYear()+"-"+($scope.date_to.getMonth()+1)+"-"+$scope.date_to.getDate()+" "+"23:59:59"; 
@@ -135,8 +138,7 @@ li:hover {
         var expenseBarChartLevel=[];
         var expenseBarChartExpData=[];
         var expenseBarChartSalesData=[];
-
-
+		var mychart;
 
 
 
@@ -144,6 +146,10 @@ li:hover {
             expenseBarChartLevel=[];
             expenseBarChartExpData=[];
             expenseBarChartSalesData=[];
+            if(mychart){
+                mychart.destroy();
+            }
+            
             if(expenseList){
                 for (i = 0; i < expenseList.length; i++) {
                     expenseBarChartExpData.push(expenseList[i].totalExpenseAmount+0);
@@ -154,13 +160,16 @@ li:hover {
 
             if(salesList){
                 for (i = 0; i < salesList.length; i++) {
+                	$scope.totalCashCollectionBtwDatw +=salesList[i].totalCollection;
+                	$scope.totalSalesBtwDatw +=salesList[i].totalSales;
                     expenseBarChartSalesData.push(salesList[i].totalSales);
                     var dt =new Date(salesList[i].date).getDate()+"/"+new Date(salesList[i].date).getMonth()+"/"+new Date(salesList[i].date). getFullYear();
                     expenseBarChartLevel.push(dt);
                 }
             }
-            new Chart(document.getElementById("bar-chart-grouped"), {
-                type: 'bar',
+            
+            mychart=new Chart(document.getElementById("bar-chart-grouped"), {
+                type:'bar',
                 data: {
                     labels: expenseBarChartLevel ,
                     datasets:  [
